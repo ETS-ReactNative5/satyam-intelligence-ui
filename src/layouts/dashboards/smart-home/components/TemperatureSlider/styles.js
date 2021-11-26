@@ -1,0 +1,66 @@
+/**
+=========================================================
+* Soft UI Dashboard PRO React - v2.0.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
+* Copyright 2021 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+
+// @mui material components
+import { makeStyles } from "@mui/styles";
+
+export default makeStyles(({ palette, transitions }) => {
+  const { circleSliderColors, transparent } = palette;
+
+  return {
+    temperatureSlider_card: {
+      height: "99.5%",
+    },
+
+    temperatureSlider: {
+      height: "100%",
+      textAlign: "center",
+
+      "& svg": {
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: `translate(-50%, -40%)`,
+      },
+
+      "& path:first-of-type": {
+        stroke: circleSliderColors.background,
+        strokeWidth: 1,
+      },
+
+      "& path": {
+        stroke: ({ color }) => palette[color].main,
+        strokeWidth: 1,
+      },
+
+      "& circle": {
+        stroke: transparent.main,
+        strokeWidth: 0,
+        filter: "none",
+        fill: ({ color }) => palette[color].main,
+        cursor: "pointer",
+        transition: transitions.create(["stroke", "stroke-width"], {
+          easing: transitions.easing.easeInOut,
+          duration: transitions.duration.complex,
+        }),
+
+        "&:active": {
+          stroke: ({ color }) => palette[color].main,
+          strokeWidth: 5,
+        },
+      },
+    },
+  };
+});
