@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 // import Icon from "@mui/material/Icon";
@@ -27,6 +12,8 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import SalesTable from "examples/Tables/SalesTable";
+import { useState, useEffect } from "react";
+
 // import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 // import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import Globe from "examples/Globe";
@@ -37,13 +24,99 @@ import breakpoints from "assets/theme/base/breakpoints";
 
 // Data
 import salesTableData from "layouts/dashboards/default/data/salesTableData";
+import api from "api/api";
+
+import SU from "assets/images/icons/flags/SU.png";
+import CUR from "assets/images/icons/flags/CUR.png";
+import NED from "assets/images/icons/flags/NED.png";
+
 // import reportsBarChartData from "layouts/dashboards/default/data/reportsBarChartData";
 // import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
 
 function Default() {
   const { values } = breakpoints;
+  const [euroStatistic, setEuroStatistic] = useState(null);
+  const [usdStatistic, setUsdStatistic] = useState(null);
+  const [branchSales, setBranchSales] = useState(null);
   // const { size } = typography;
   // const { chart, items } = reportsBarChartData;
+
+  useEffect(() => {
+    getAnalytics();
+  }, []);
+
+  const getAnalytics = async () => {
+    const body = {
+      requestedStartDate: "2021-11-26",
+      requestedEndDate: "2021-11-29",
+    };
+    const { data, status } = await api.post("/api/analytics", body);
+    if (status === 200) {
+      setEuroStatistic(data.euro);
+      setUsdStatistic(data.usd);
+      setBranchSales(formatBranchSales(data.branchSales));
+    }
+  };
+
+  const formatBranchSales = (branches) => {
+    const formattedBranchBySale = [];
+    
+    //Sorting by highest sale on euro and usd
+    var sortedHighestSale = branches.slice(0);
+    sortedHighestSale.sort((a, b) => {
+      return (b.euroSale - a.euroSale && b.usdSale - a.usdSale);
+    });
+    sortedHighestSale.forEach((branchSale)=>{
+      formattedBranchBySale.push({
+        Land:getCountry(branchSale),
+        Locatie: `${branchSale.branch}`,
+        "Verkoop EURO": `€ ${branchSale.euroSale}`,
+        "Verkoop USD": `$ ${branchSale.usdSale}`,
+      })
+    })
+    return formattedBranchBySale;
+  };
+  
+  const getCountry = (branchSale)=>{
+    if(branchSale.branch.includes("Den Haag")){
+      return [NED,'Nederland']
+    }
+    else if(branchSale.branch.includes('Curacao')){
+      return [CUR,"Curacao"]
+    }else{
+      return [SU,'Suriname']
+    }
+  }
+
+
+  const getEuroPercentage = ()=>{
+    if(euroStatistic){
+      return calculatePercentage(euroStatistic);
+    }
+  }
+
+  const getUsdPercentage = ()=>{
+    if(usdStatistic){
+      return calculatePercentage(usdStatistic);
+    }
+  }
+
+  const calculatePercentage = (statistic)=> {
+    let calculatedPercentage = ((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2);
+    if(((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.00){
+      calculatedPercentage = 0;
+    }
+    let color = 'success';
+    let sign = '+';
+
+    if (calculatedPercentage < 0) {
+      color = 'error';
+      sign = "-";
+    }
+    return { color, text: `${sign}` + calculatedPercentage + "%" };
+  }
+
+
 
   return (
     <DashboardLayout>
@@ -80,36 +153,33 @@ function Default() {
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Totale Commissie EURO" }}
-                    count="€ 430"
-                    percentage={{ color: "success", text: "+55%" }}
+                    count={`€ ${euroStatistic && euroStatistic.totalCommission}`}
+                    // percentage={{ color: "success", text: "+55%" }}
                     icon={{ color: "info", component: "paid" }}
                   />
                 </SuiBox>
                 <MiniStatisticsCard
                   title={{ text: "Totale Commissie USD" }}
-                  count="$ 275.50"
-                  percentage={{ color: "success", text: "+3%" }}
-                  icon={{ color: "info", component: "public" }}
+                  count={`$ ${usdStatistic && usdStatistic.totalCommission}`}
+                  // percentage={{ color: "success", text: "+3%" }}
+                  icon={{ color: "info", component: "paid" }}
                 />
               </Grid>
               <Grid item xs={12} sm={5}>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Totale Winst EURO" }}
-                    count="$ 650.00"
-                    percentage={{ color: "error", text: "-2%" }}
+                    count={`€ ${euroStatistic && euroStatistic.totalProfit}`}
+                    percentage={getEuroPercentage()}
                     icon={{ color: "info", component: "emoji_events" }}
                   />
                 </SuiBox>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
                     title={{ text: "Totale Winst USD" }}
-                    count="$ 775.50"
-                    percentage={{ color: "success", text: "+5%" }}
-                    icon={{
-                      color: "info",
-                      component: "shopping_cart",
-                    }}
+                    count={`$ ${usdStatistic && usdStatistic.totalProfit}`}
+                    percentage={getUsdPercentage()}
+                    icon={{ color: "info", component: "emoji_events" }}
                   />
                 </SuiBox>
               </Grid>
@@ -118,7 +188,7 @@ function Default() {
           <Grid item xs={12} md={10} lg={7}>
             <Grid item xs={12} lg={10}>
               <SuiBox mb={3} position="relative">
-                <SalesTable title="Verkoop per Filiaal" rows={salesTableData} />
+                <SalesTable title="Verkoop per Filiaal" rows={branchSales && branchSales || []} />
               </SuiBox>
             </Grid>
           </Grid>
@@ -163,3 +233,5 @@ function Default() {
 }
 
 export default Default;
+
+
