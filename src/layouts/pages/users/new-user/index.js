@@ -35,30 +35,31 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // NewUser page components
-import UserInfo from "layouts/pages/users/new-user/components/UserInfo";
-import Address from "layouts/pages/users/new-user/components/Address";
-import Socials from "layouts/pages/users/new-user/components/Socials";
-import Profile from "layouts/pages/users/new-user/components/Profile";
+import UserInfo from "layouts/pages/users/new-user/components/Passagier";
+import Address from "layouts/pages/users/new-user/components/Systeem";
+import Socials from "layouts/pages/users/new-user/components/Betaling";
+import Profile from "layouts/pages/users/new-user/components/Specificatie";
 
 // NewUser layout schemas for form and form feilds
 import validations from "layouts/pages/users/new-user/schemas/validations";
 import form from "layouts/pages/users/new-user/schemas/form";
 import initialValues from "layouts/pages/users/new-user/schemas/initialValues";
+import api from "api/api";
 
 function getSteps() {
-  return ["User Info", "Address", "Social", "Profile"];
+  return ["Passagiers", "Systeem", "Betaling", "Specificatie"];
 }
 
-function getStepContent(stepIndex, formData) {
+function getStepContent(stepIndex, formData, setRequestBody, requestBody) {
   switch (stepIndex) {
     case 0:
-      return <UserInfo formData={formData} />;
+      return <UserInfo formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 1:
-      return <Address formData={formData} />;
+      return <Address formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 2:
-      return <Socials formData={formData} />;
+      return <Socials formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 3:
-      return <Profile formData={formData} />;
+      return <Profile formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     default:
       return null;
   }
@@ -66,6 +67,8 @@ function getStepContent(stepIndex, formData) {
 
 function NewUser() {
   const [activeStep, setActiveStep] = useState(0);
+  const [requestBody, setRequestBody] = useState({isPaid:false});
+
   const steps = getSteps();
   const { formId, formField } = form;
   const currentValidation = validations[activeStep];
@@ -75,14 +78,16 @@ function NewUser() {
   const handleBack = () => setActiveStep(activeStep - 1);
 
   const submitForm = async (values, actions) => {
-    await sleep(1000);
+    try{
+      requestBody['createdBy']='WBHAGGAN';
+      requestBody['commissionInPercentage']=requestBody['commissionInPercentage'].split('%')[0];
+      
 
-    // eslint-disable-next-line no-alert
-    alert(JSON.stringify(values, null, 2));
-
-    actions.setSubmitting(false);
-    actions.resetForm();
-
+      const {data,status} = await api.post('/api/hmpr',[requestBody]);
+      console.log(status);
+    }catch(exception){
+      console.log('Exception while creating HMPR', exception)
+    }
     setActiveStep(0);
   };
 
@@ -91,8 +96,6 @@ function NewUser() {
       submitForm(values, actions);
     } else {
       setActiveStep(activeStep + 1);
-      actions.setTouched({});
-      actions.setSubmitting(false);
     }
   };
 
@@ -112,34 +115,37 @@ function NewUser() {
             <Formik
               initialValues={initialValues}
               validationSchema={currentValidation}
-              onSubmit={handleSubmit}
             >
               {({ values, errors, touched, isSubmitting }) => (
                 <Form id={formId} autoComplete="off">
                   <Card className="h-100">
                     <SuiBox p={2}>
                       <SuiBox>
-                        {getStepContent(activeStep, {
-                          values,
-                          touched,
-                          formField,
-                          errors,
-                        })}
+                        {getStepContent(
+                          activeStep,
+                          {
+                            values,
+                            touched,
+                            formField,
+                            errors,
+                          },
+                          setRequestBody,
+                          requestBody
+                        )}
                         <SuiBox mt={2} width="100%" display="flex" justifyContent="space-between">
                           {activeStep === 0 ? (
                             <SuiBox />
                           ) : (
                             <SuiButton variant="gradient" buttonColor="light" onClick={handleBack}>
-                              back
+                              terug
                             </SuiButton>
                           )}
                           <SuiButton
-                            disabled={isSubmitting}
-                            type="submit"
                             variant="gradient"
                             buttonColor="dark"
+                            onClick={handleSubmit}
                           >
-                            {isLastStep ? "send" : "next"}
+                            {isLastStep ? "Hmpr Aanmaken" : "Volgende"}
                           </SuiButton>
                         </SuiBox>
                       </SuiBox>

@@ -102,7 +102,7 @@ function Default() {
   }
 
   const calculatePercentage = (statistic)=> {
-    let calculatedPercentage = ((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2);
+    let calculatedPercentage = ((statistic.totalProfit/statistic.totalCommission) * 100).toFixed(2);
     if(((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.00){
       calculatedPercentage = 0;
     }

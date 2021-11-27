@@ -20,15 +20,15 @@ export default {
       name: "firstName",
       label: "first name",
       type: "text",
-      placeholder: "eg. Micheal",
-      errorMsg: "First name is required.",
+      placeholder: "vb. John",
+      errorMsg: "Voornaam is verplicht.",
     },
     lastName: {
       name: "lastName",
       label: "last name",
       type: "text",
-      placeholder: "eg. Prior",
-      errorMsg: "Last name is required.",
+      placeholder: "vb. Doe",
+      errorMsg: "Achternaam is verplicht.",
     },
     company: {
       name: "company",
@@ -118,5 +118,30 @@ export default {
       label: "bio",
       placeholder: "Say a few words about who you are or what you're working on.",
     },
+    fare:{
+      name: "fare",
+      label: "fare",
+      placeholder: "Basic Fare",
+    },
+    tax:{
+      name: "tax",
+      label: "tax",
+      placeholder: "Tax Bedrag",
+    },
+    commissionInPercentage:{
+      name: "commissionInPercentage",
+      label: "commissie in procenten",
+      placeholder: "vb. 6%",
+    },
+    amountReceived:{
+      name: "amountReceived",
+      label: "Bedrag ontvagen(saldo)",
+      placeholder: "Bedrag ontvangen van klant",
+    },
+    gdsProvider:{
+      name: "amountReceived",
+      label: "Bedrag ontvagen(saldo)",
+      placeholder: "Bedrag ontvangen van klant",
+    }
   },
 };
