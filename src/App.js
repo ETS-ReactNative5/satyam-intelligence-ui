@@ -53,6 +53,8 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
+import HmprDetails from "views/Hmpr/HmprDetails";
+
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator } = controller;
@@ -163,6 +165,7 @@ export default function App() {
           {layout === "vr" && <Configurator />}
           <Switch>
             {getRoutes(routes)}
+            {/* <Route exact path={'/hmpr/details'} component={HmprDetails} key={'hmprDetails'} />; */}
             <Redirect from="*" to="/dashboards/default" />
           </Switch>
         </ThemeProvider>

@@ -1,18 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { forwardRef } from "react";
 
 // prop-types is a library for typechecking of props
@@ -28,12 +13,13 @@ import Button from "@mui/material/Button";
 import styles from "components/SuiButton/styles";
 
 const SuiButton = forwardRef(
-  ({ buttonColor, variant, size, circular, iconOnly, children, customClass, ...rest }, ref) => {
+  ({ buttonColor, variant,disabled, size, circular, iconOnly, children, customClass, ...rest }, ref) => {
     const classes = styles({ buttonColor, variant, size, iconOnly });
     return (
       <Button
         {...rest}
         ref={ref}
+        disabled={disabled}
         color="primary"
         variant={variant === "gradient" ? "contained" : variant}
         size={size}

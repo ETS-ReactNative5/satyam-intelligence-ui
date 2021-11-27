@@ -46,7 +46,6 @@ import ProfileOverview from "layouts/pages/profile/profile-overview";
 import Teams from "layouts/pages/profile/teams";
 import AllProjects from "layouts/pages/profile/all-projects";
 import Reports from "layouts/pages/users/reports";
-import NewHmpr from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
 import Billing from "layouts/pages/account/billing";
 import Invoice from "layouts/pages/account/invoice";
@@ -100,7 +99,12 @@ import Document from "examples/Icons/Document";
 import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
-import HmprOverview from "layouts/pages/hmpr-overview";
+
+import HomePage from "views/HomePage";
+import HmprOverview from "views/Hmpr/HmprOverview";
+import NewHmpr from "views/Hmpr/NewHmpr";
+import HmprDetails from "views/Hmpr/HmprDetails";
+
 
 const routes = [
   {
@@ -110,10 +114,10 @@ const routes = [
     icon: <Shop size="12px" />,
     collapse: [
       {
-        name: "Default",
-        key: "default",
+        name: "Home Page",
+        key: "HomePage",
         route: "/dashboards/default",
-        component: Default,
+        component: HomePage,
       }
       // {
       //   name: "Automotive",
@@ -157,7 +161,7 @@ const routes = [
     collapse: [
       {
         name: "HMPR",
-        key: "users",
+        key: "hmpr",
         collapse: [
           // {
           //   name: "Reports",
@@ -167,7 +171,7 @@ const routes = [
           // },
           {
             name: "Nieuw",
-            key: "new-hmpr",
+            key: "newHmpr",
             route: "/hmpr/new",
             component: NewHmpr,
           },
@@ -177,6 +181,12 @@ const routes = [
             route: "/hmpr/overzicht",
             component: HmprOverview
           },
+          {
+            name: "Hmpr Details",
+            key: "hmprDetails",
+            route: "/hmpr/details",
+            component: HmprDetails,
+          }
         ],
       },
       // {
