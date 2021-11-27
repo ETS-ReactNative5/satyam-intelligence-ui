@@ -138,7 +138,7 @@ function Profile({ formData, requestBuilder, state }) {
         <div>
           {profit  && (
             <SuiTypography variant="button" fontWeight="bold" textColor="text">
-            Winst: {state.currency} {" "} {profit}
+            Winst: {state.currency} {" "} {profit.toFixed(2)}
           </SuiTypography>
           )}
         </div>

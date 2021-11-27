@@ -74,7 +74,7 @@ function DataTable({
     previousPage,
     setPageSize,
     setGlobalFilter,
-    state: { pageIndex, pageSize, globalFilter },
+    state: { pageIndex, pageSize, globalFilter }
   } = tableInstance;
 
   // Set the default value for the entries per page when component mounts

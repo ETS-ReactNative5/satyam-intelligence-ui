@@ -65,7 +65,7 @@ function getStepContent(stepIndex, formData, setRequestBody, requestBody) {
   }
 }
 
-function NewUser() {
+function NewHmpr() {
   const [activeStep, setActiveStep] = useState(0);
   const [requestBody, setRequestBody] = useState({isPaid:false});
 
@@ -162,4 +162,4 @@ function NewUser() {
   );
 }
 
-export default NewUser;
+export default NewHmpr;

@@ -46,7 +46,7 @@ import ProfileOverview from "layouts/pages/profile/profile-overview";
 import Teams from "layouts/pages/profile/teams";
 import AllProjects from "layouts/pages/profile/all-projects";
 import Reports from "layouts/pages/users/reports";
-import NewUser from "layouts/pages/users/new-user";
+import NewHmpr from "layouts/pages/users/new-user";
 import Settings from "layouts/pages/account/settings";
 import Billing from "layouts/pages/account/billing";
 import Invoice from "layouts/pages/account/invoice";
@@ -100,11 +100,12 @@ import Document from "examples/Icons/Document";
 import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreditCard from "examples/Icons/CreditCard";
+import HmprOverview from "layouts/pages/hmpr-overview";
 
 const routes = [
   {
     type: "collapse",
-    name: "Dashboards",
+    name: "Dashboard",
     key: "dashboards",
     icon: <Shop size="12px" />,
     collapse: [
@@ -113,164 +114,171 @@ const routes = [
         key: "default",
         route: "/dashboards/default",
         component: Default,
-      },
-      {
-        name: "Automotive",
-        key: "automotive",
-        route: "/dashboards/automotive",
-        component: Automotive,
-      },
-      {
-        name: "Smart Home",
-        key: "smart-home",
-        route: "/dashboards/smart-home",
-        component: SmartHome,
-      },
-      {
-        name: "Virtual Reality",
-        key: "virtual-reality",
-        collapse: [
-          {
-            name: "VR Default",
-            key: "vr-default",
-            route: "/dashboards/virtual-reality/default",
-            component: VRDefault,
-          },
-          {
-            name: "VR Info",
-            key: "vr-info",
-            route: "/dashboards/virtual-reality/info",
-            component: VRInfo,
-          },
-        ],
-      },
-      { name: "CRM", key: "crm", route: "/dashboards/crm", component: CRM },
+      }
+      // {
+      //   name: "Automotive",
+      //   key: "automotive",
+      //   route: "/dashboards/automotive",
+      //   component: Automotive,
+      // },
+      // {
+      //   name: "Smart Home",
+      //   key: "smart-home",
+      //   route: "/dashboards/smart-home",
+      //   component: SmartHome,
+      // },
+      // {
+      //   name: "Virtual Reality",
+      //   key: "virtual-reality",
+      //   collapse: [
+      //     {
+      //       name: "VR Default",
+      //       key: "vr-default",
+      //       route: "/dashboards/virtual-reality/default",
+      //       component: VRDefault,
+      //     },
+      //     {
+      //       name: "VR Info",
+      //       key: "vr-info",
+      //       route: "/dashboards/virtual-reality/info",
+      //       component: VRInfo,
+      //     },
+      //   ],
+      // },
+      // { name: "CRM", key: "crm", route: "/dashboards/crm", component: CRM },
     ],
   },
-  { type: "title", title: "Pages", key: "title-pages" },
+  { type: "title", title: "Operations", key: "title-pages" },
   {
     type: "collapse",
-    name: "Pages",
+    name: "Finance",
     key: "pages",
     icon: <Office size="12px" />,
     collapse: [
       {
-        name: "Profile",
-        key: "profile",
-        collapse: [
-          {
-            name: "Profile Overview",
-            key: "profile-overview",
-            route: "/pages/profile/profile-overview",
-            component: ProfileOverview,
-          },
-          {
-            name: "Teams",
-            key: "teams",
-            route: "/pages/profile/teams",
-            component: Teams,
-          },
-          {
-            name: "All Projects",
-            key: "all-projects",
-            route: "/pages/profile/all-projects",
-            component: AllProjects,
-          },
-        ],
-      },
-      {
-        name: "Users",
+        name: "HMPR",
         key: "users",
         collapse: [
+          // {
+          //   name: "Reports",
+          //   key: "reports",
+          //   route: "/pages/users/reports",
+          //   component: Reports,
+          // },
           {
-            name: "Reports",
-            key: "reports",
-            route: "/pages/users/reports",
-            component: Reports,
+            name: "Nieuw",
+            key: "new-hmpr",
+            route: "/hmpr/new",
+            component: NewHmpr,
           },
           {
-            name: "New User",
-            key: "new-user",
-            route: "/pages/users/new-user",
-            component: NewUser,
-          },
-        ],
-      },
-      {
-        name: "Account",
-        key: "account",
-        collapse: [
-          {
-            name: "Settings",
-            key: "settings",
-            route: "/pages/account/settings",
-            component: Settings,
-          },
-          {
-            name: "Billing",
-            key: "billing",
-            route: "/pages/account/billing",
-            component: Billing,
-          },
-          {
-            name: "Invoice",
-            key: "invoice",
-            route: "/pages/account/invoice",
-            component: Invoice,
-          },
-          {
-            name: "Security",
-            key: "security",
-            route: "/pages/account/security",
-            component: Security,
+            name: "Rapport Overzicht",
+            key: "new-hmpr",
+            route: "/hmpr/overzicht",
+            component: HmprOverview
           },
         ],
       },
-      {
-        name: "Projects",
-        key: "projects",
-        collapse: [
-          {
-            name: "General",
-            key: "general",
-            route: "/pages/projects/general",
-            component: General,
-          },
-          {
-            name: "Timeline",
-            key: "timeline",
-            route: "/pages/projects/timeline",
-            component: Timeline,
-          },
-          {
-            name: "New Project",
-            key: "new-project",
-            route: "/pages/projects/new-project",
-            component: NewProject,
-          },
-        ],
-      },
-      {
-        name: "Pricing Page",
-        key: "pricing-page",
-        route: "/pages/pricing-page",
-        component: PricingPage,
-      },
-      { name: "RTL", key: "rtl", route: "/pages/rtl", component: RTL },
-      { name: "Widgets", key: "widgets", route: "/pages/widgets", component: Widgets },
-      { name: "Charts", key: "charts", route: "/pages/charts", component: Charts },
-      {
-        name: "Sweet Alerts",
-        key: "sweet-alerts",
-        route: "/pages/sweet-alerts",
-        component: SweetAlerts,
-      },
-      {
-        name: "Notfications",
-        key: "notifications",
-        route: "/pages/notifications",
-        component: Notifications,
-      },
+      // {
+      //   name: "Profile",
+      //   key: "profile",
+      //   collapse: [
+      //     {
+      //       name: "Profile Overview",
+      //       key: "profile-overview",
+      //       route: "/pages/profile/profile-overview",
+      //       component: ProfileOverview,
+      //     },
+      //     {
+      //       name: "Teams",
+      //       key: "teams",
+      //       route: "/pages/profile/teams",
+      //       component: Teams,
+      //     },
+      //     {
+      //       name: "All Projects",
+      //       key: "all-projects",
+      //       route: "/pages/profile/all-projects",
+      //       component: AllProjects,
+      //     },
+      //   ],
+      // },
+      
+      // {
+      //   name: "Account",
+      //   key: "account",
+      //   collapse: [
+      //     {
+      //       name: "Settings",
+      //       key: "settings",
+      //       route: "/pages/account/settings",
+      //       component: Settings,
+      //     },
+      //     {
+      //       name: "Billing",
+      //       key: "billing",
+      //       route: "/pages/account/billing",
+      //       component: Billing,
+      //     },
+      //     {
+      //       name: "Invoice",
+      //       key: "invoice",
+      //       route: "/pages/account/invoice",
+      //       component: Invoice,
+      //     },
+      //     {
+      //       name: "Security",
+      //       key: "security",
+      //       route: "/pages/account/security",
+      //       component: Security,
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: "Projects",
+      //   key: "projects",
+      //   collapse: [
+      //     {
+      //       name: "General",
+      //       key: "general",
+      //       route: "/pages/projects/general",
+      //       component: General,
+      //     },
+      //     {
+      //       name: "Timeline",
+      //       key: "timeline",
+      //       route: "/pages/projects/timeline",
+      //       component: Timeline,
+      //     },
+      //     {
+      //       name: "New Project",
+      //       key: "new-project",
+      //       route: "/pages/projects/new-project",
+      //       component: NewProject,
+      //     },
+      //   ],
+      // },
+      // {
+      //   name: "Pricing Page",
+      //   key: "pricing-page",
+      //   route: "/pages/pricing-page",
+      //   component: PricingPage,
+      // },
+      // { name: "RTL", key: "rtl", route: "/pages/rtl", component: RTL },
+      // { name: "Widgets", key: "widgets", route: "/pages/widgets", component: Widgets },
+      // { name: "Charts", key: "charts", route: "/pages/charts", component: Charts },
+      // {
+      //   name: "Sweet Alerts",
+      //   key: "sweet-alerts",
+      //   route: "/pages/sweet-alerts",
+      //   component: SweetAlerts,
+      // },
+      // {
+      //   name: "Notfications",
+      //   key: "notifications",
+      //   route: "/pages/notifications",
+      //   component: Notifications,
+      // },
     ],
   },
   {
@@ -526,159 +534,159 @@ const routes = [
     ],
   },
   { type: "divider", key: "divider-1" },
-  { type: "title", title: "Docs", key: "title-docs" },
-  {
-    type: "collapse",
-    name: "Basic",
-    key: "basic",
-    icon: <SpaceShip size="12px" />,
-    collapse: [
-      {
-        name: "Getting Started",
-        key: "getting-started",
-        collapse: [
-          {
-            name: "Overview",
-            key: "overview",
-            href: "https://www.creative-tim.com/learning-lab/react/overview/soft-ui-dashboard",
-          },
-          {
-            name: "License",
-            key: "license",
-            href: "https://www.creative-tim.com/learning-lab/react/license/soft-ui-dashboard",
-          },
-          {
-            name: "Quick Start",
-            key: "quick-start",
-            href: "https://www.creative-tim.com/learning-lab/react/quick-start/soft-ui-dashboard",
-          },
-          {
-            name: "Build Tools",
-            key: "build-tools",
-            href: "https://www.creative-tim.com/learning-lab/react/build-tools/soft-ui-dashboard",
-          },
-        ],
-      },
-      {
-        name: "Foundation",
-        key: "foundation",
-        collapse: [
-          {
-            name: "Colors",
-            key: "colors",
-            href: "https://www.creative-tim.com/learning-lab/react/colors/soft-ui-dashboard",
-          },
-          {
-            name: "Grid",
-            key: "grid",
-            href: "https://www.creative-tim.com/learning-lab/react/grid/soft-ui-dashboard",
-          },
-          {
-            name: "Typography",
-            key: "typography",
-            href: "https://www.creative-tim.com/learning-lab/react/typography/soft-ui-dashboard",
-          },
-          {
-            name: "Icons",
-            key: "icons",
-            href: "https://www.creative-tim.com/learning-lab/react/icons/soft-ui-dashboard",
-          },
-          {
-            name: "Routing System",
-            key: "routing-system",
-            href: "https://www.creative-tim.com/learning-lab/react/routing-system/soft-ui-dashboard",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    type: "collapse",
-    name: "Components",
-    key: "components",
-    icon: <CustomerSupport size="12px" />,
-    collapse: [
-      {
-        name: "Alerts",
-        key: "alerts",
-        href: "https://www.creative-tim.com/learning-lab/react/alerts/soft-ui-dashboard",
-      },
-      {
-        name: "Badge",
-        key: "badge",
-        href: "https://www.creative-tim.com/learning-lab/react/badge/soft-ui-dashboard",
-      },
-      {
-        name: "Buttons",
-        key: "buttons",
-        href: "https://www.creative-tim.com/learning-lab/react/buttons/soft-ui-dashboard",
-      },
-      {
-        name: "Social Button",
-        key: "social-button",
-        href: "https://www.creative-tim.com/learning-lab/react/social-buttons/soft-ui-dashboard",
-      },
-      {
-        name: "Cards",
-        key: "cards",
-        href: "https://www.creative-tim.com/learning-lab/react/cards/soft-ui-dashboard",
-      },
-      {
-        name: "Collapse",
-        key: "collapse",
-        href: "https://www.creative-tim.com/learning-lab/react/collapse/soft-ui-dashboard",
-      },
-      {
-        name: "Dropdowns",
-        key: "dropdowns",
-        href: "https://www.creative-tim.com/learning-lab/react/dropdowns/soft-ui-dashboard",
-      },
-      {
-        name: "Forms",
-        key: "forms",
-        href: "https://www.creative-tim.com/learning-lab/react/forms/soft-ui-dashboard",
-      },
-      {
-        name: "Navs",
-        key: "navs",
-        href: "https://www.creative-tim.com/learning-lab/react/navs/soft-ui-dashboard",
-      },
-      {
-        name: "Pagination",
-        key: "pagination",
-        href: "https://www.creative-tim.com/learning-lab/react/pagination/soft-ui-dashboard",
-      },
-      {
-        name: "Popovers",
-        key: "popovers",
-        href: "https://www.creative-tim.com/learning-lab/react/popovers/soft-ui-dashboard",
-      },
-      {
-        name: "Progress",
-        key: "progress",
-        href: "https://www.creative-tim.com/learning-lab/react/progress/soft-ui-dashboard",
-      },
-      {
-        name: "Tables",
-        key: "tables",
-        href: "https://www.creative-tim.com/learning-lab/react/tables/soft-ui-dashboard",
-      },
-      {
-        name: "Tooltips",
-        key: "tooltips",
-        href: "https://www.creative-tim.com/learning-lab/react/tooltips/soft-ui-dashboard",
-      },
-    ],
-  },
-  {
-    type: "collapse",
-    name: "Change Log",
-    key: "changelog",
-    route:
-      "https://github.com/creativetimofficial/ct-soft-ui-dashboard-pro-material-ui/blob/main/CHANGELOG.md",
-    icon: <CreditCard size="12px" />,
-    noCollapse: true,
-  },
+  // { type: "title", title: "Docs", key: "title-docs" },
+  // {
+  //   type: "collapse",
+  //   name: "Basic",
+  //   key: "basic",
+  //   icon: <SpaceShip size="12px" />,
+  //   collapse: [
+  //     {
+  //       name: "Getting Started",
+  //       key: "getting-started",
+  //       collapse: [
+  //         {
+  //           name: "Overview",
+  //           key: "overview",
+  //           href: "https://www.creative-tim.com/learning-lab/react/overview/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "License",
+  //           key: "license",
+  //           href: "https://www.creative-tim.com/learning-lab/react/license/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Quick Start",
+  //           key: "quick-start",
+  //           href: "https://www.creative-tim.com/learning-lab/react/quick-start/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Build Tools",
+  //           key: "build-tools",
+  //           href: "https://www.creative-tim.com/learning-lab/react/build-tools/soft-ui-dashboard",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       name: "Foundation",
+  //       key: "foundation",
+  //       collapse: [
+  //         {
+  //           name: "Colors",
+  //           key: "colors",
+  //           href: "https://www.creative-tim.com/learning-lab/react/colors/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Grid",
+  //           key: "grid",
+  //           href: "https://www.creative-tim.com/learning-lab/react/grid/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Typography",
+  //           key: "typography",
+  //           href: "https://www.creative-tim.com/learning-lab/react/typography/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Icons",
+  //           key: "icons",
+  //           href: "https://www.creative-tim.com/learning-lab/react/icons/soft-ui-dashboard",
+  //         },
+  //         {
+  //           name: "Routing System",
+  //           key: "routing-system",
+  //           href: "https://www.creative-tim.com/learning-lab/react/routing-system/soft-ui-dashboard",
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Components",
+  //   key: "components",
+  //   icon: <CustomerSupport size="12px" />,
+  //   collapse: [
+  //     {
+  //       name: "Alerts",
+  //       key: "alerts",
+  //       href: "https://www.creative-tim.com/learning-lab/react/alerts/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Badge",
+  //       key: "badge",
+  //       href: "https://www.creative-tim.com/learning-lab/react/badge/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Buttons",
+  //       key: "buttons",
+  //       href: "https://www.creative-tim.com/learning-lab/react/buttons/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Social Button",
+  //       key: "social-button",
+  //       href: "https://www.creative-tim.com/learning-lab/react/social-buttons/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Cards",
+  //       key: "cards",
+  //       href: "https://www.creative-tim.com/learning-lab/react/cards/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Collapse",
+  //       key: "collapse",
+  //       href: "https://www.creative-tim.com/learning-lab/react/collapse/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Dropdowns",
+  //       key: "dropdowns",
+  //       href: "https://www.creative-tim.com/learning-lab/react/dropdowns/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Forms",
+  //       key: "forms",
+  //       href: "https://www.creative-tim.com/learning-lab/react/forms/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Navs",
+  //       key: "navs",
+  //       href: "https://www.creative-tim.com/learning-lab/react/navs/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Pagination",
+  //       key: "pagination",
+  //       href: "https://www.creative-tim.com/learning-lab/react/pagination/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Popovers",
+  //       key: "popovers",
+  //       href: "https://www.creative-tim.com/learning-lab/react/popovers/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Progress",
+  //       key: "progress",
+  //       href: "https://www.creative-tim.com/learning-lab/react/progress/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Tables",
+  //       key: "tables",
+  //       href: "https://www.creative-tim.com/learning-lab/react/tables/soft-ui-dashboard",
+  //     },
+  //     {
+  //       name: "Tooltips",
+  //       key: "tooltips",
+  //       href: "https://www.creative-tim.com/learning-lab/react/tooltips/soft-ui-dashboard",
+  //     },
+  //   ],
+  // },
+  // {
+  //   type: "collapse",
+  //   name: "Change Log",
+  //   key: "changelog",
+  //   route:
+  //     "https://github.com/creativetimofficial/ct-soft-ui-dashboard-pro-material-ui/blob/main/CHANGELOG.md",
+  //   icon: <CreditCard size="12px" />,
+  //   noCollapse: true,
+  // },
 ];
 
 export default routes;

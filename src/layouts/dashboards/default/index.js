@@ -47,8 +47,8 @@ function Default() {
 
   const getAnalytics = async () => {
     const body = {
-      requestedStartDate: "2021-11-26",
-      requestedEndDate: "2021-11-29",
+      startDate: "2021-11-26",
+      endDate: "2021-11-29",
     };
     const { data, status } = await api.post("/api/analytics", body);
     if (status === 200) {
@@ -63,9 +63,7 @@ function Default() {
     
     //Sorting by highest sale on euro and usd
     var sortedHighestSale = branches.slice(0);
-    sortedHighestSale.sort((a, b) => {
-      return (b.euroSale - a.euroSale && b.usdSale - a.usdSale);
-    });
+    sortedHighestSale.sort((a, b) => ((a.euroSale + a.usdSale) < (b.euroSale + b.usdSale)) ? 1 : -1);
     sortedHighestSale.forEach((branchSale)=>{
       formattedBranchBySale.push({
         Land:getCountry(branchSale),
@@ -103,12 +101,14 @@ function Default() {
 
   const calculatePercentage = (statistic)=> {
     let calculatedPercentage = ((statistic.totalProfit/statistic.totalCommission) * 100).toFixed(2);
-    if(((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.00){
-      calculatedPercentage = 0;
-    }
     let color = 'success';
     let sign = '+';
 
+    if((((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.00)
+    || isNaN(calculatedPercentage)){
+      calculatedPercentage = 0;
+      sign="";
+    }
     if (calculatedPercentage < 0) {
       color = 'error';
       sign = "-";
