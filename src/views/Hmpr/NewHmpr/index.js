@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 
 // formik components
@@ -32,8 +31,9 @@ import form from "layouts/pages/users/new-user/schemas/form";
 import initialValues from "layouts/pages/users/new-user/schemas/initialValues";
 // My Imports
 import api from "api/api";
-import Swal from "sweetalert2";
+import { getUserInformation } from "utils/Utils";
 import { fireAlert } from "utils/Alert";
+import { useHistory } from "react-router-dom";
 
 function getSteps() {
   return ["Passagiers", "Systeem", "Betaling", "Specificatie"];
@@ -55,30 +55,35 @@ function getStepContent(stepIndex, formData, setRequestBody, requestBody) {
 }
 
 function NewHmpr() {
+  const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
-  const [requestBody, setRequestBody] = useState({isPaid:false});
+  const [requestBody, setRequestBody] = useState({ isPaid: false });
 
   const steps = getSteps();
   const { formId, formField } = form;
   const currentValidation = validations[activeStep];
   const isLastStep = activeStep === steps.length - 1;
 
-  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const handleBack = () => setActiveStep(activeStep - 1);
 
   const submitForm = async (values, actions) => {
-    try{
-      requestBody['createdBy']='WBHAGGAN';
-      requestBody['commissionInPercentage']=requestBody['commissionInPercentage'].split('%')[0];
-      const {data,status} = await api.post('/api/hmpr',[requestBody]);
-      if(status === 200){
-        fireAlert(`Hmpr Successfully Created`
-        ,`Reference #${data[0].id}`, 'success','Okay!')
+    try {
+      const userInformation = getUserInformation();
+      if (!userInformation) {
+        history.push("/authentication/sign-in/basic");
+        return;
       }
-    }catch(exception){
-      fireAlert(`Failed Creating HMPR`
-        ,`Contact Widjesh Shiva Bhaggan.`, 'error','Okay!')
-      console.log('Exception while creating HMPR', exception)
+      requestBody["commissionInPercentage"] = requestBody["commissionInPercentage"].split("%")[0];
+      const headers = {
+        headers: {Authorization:`Bearer ${userInformation.jwt}`},
+      };
+      const { data, status } = await api.post("/api/hmpr", [requestBody], headers);
+      if (status === 200) {
+        fireAlert(`Hmpr Successfully Created`, `Reference #${data[0].id}`, "success", "Okay!");
+      }
+    } catch (exception) {
+      fireAlert(`Failed Creating HMPR`, `Contact Widjesh Shiva Bhaggan.`, "error", "Okay!");
+      console.log("Exception while creating HMPR", exception);
     }
     setActiveStep(0);
   };
@@ -104,10 +109,7 @@ function NewHmpr() {
                 </Step>
               ))}
             </Stepper>
-            <Formik
-              initialValues={initialValues}
-              validationSchema={currentValidation}
-            >
+            <Formik initialValues={initialValues} validationSchema={currentValidation}>
               {({ values, errors, touched, isSubmitting }) => (
                 <Form id={formId} autoComplete="off">
                   <Card className="h-100">
@@ -132,11 +134,7 @@ function NewHmpr() {
                               terug
                             </SuiButton>
                           )}
-                          <SuiButton
-                            variant="gradient"
-                            buttonColor="dark"
-                            onClick={handleSubmit}
-                          >
+                          <SuiButton variant="gradient" buttonColor="dark" onClick={handleSubmit}>
                             {isLastStep ? "Hmpr Aanmaken" : "Volgende"}
                           </SuiButton>
                         </SuiBox>

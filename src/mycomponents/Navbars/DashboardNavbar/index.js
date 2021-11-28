@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v2.0.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect } from "react";
 
@@ -47,8 +34,17 @@ import { useSoftUIController } from "context";
 import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
+import {getUserInformation} from 'utils/Utils';
+import { useHistory } from "react-router-dom";
+
+
 function DashboardNavbar({ absolute, light, isMini }) {
+  const history = useHistory();
+
   const [navbarType, setNavbarType] = useState();
+  const [sId,setSid] = useState(null);
+  const [userLoggedIn,setUserLoggedIn] = useState(false);
+
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
@@ -57,6 +53,11 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
   useEffect(() => {
     // Setting the navbar type
+    const userInformation = getUserInformation();
+    if(userInformation){
+      setSid(userInformation.sId);
+      setUserLoggedIn(true);
+    }
     if (fixedNavbar) {
       setNavbarType("sticky");
     } else {
@@ -70,7 +71,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
         value: (fixedNavbar && window.scrollY === 0) || !fixedNavbar,
       });
     }
-
     /** 
      The event listener that's calling the handleTransparentNavbar function when 
      scrolling the window.
@@ -89,6 +89,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
     dispatch({ type: "OPEN_CONFIGURATOR", value: !openConfigurator });
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
+
+  const handleSignOut = ()=>{
+    localStorage.removeItem("jwt");
+    history.push("/authentication/sign-in/basic");
+  }
+
 
   // Render the notifications menu
   const renderMenu = () => (
@@ -148,20 +154,39 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </SuiBox>
         {isMini ? null : (
           <SuiBox customClass={classes.navbar_row}>
-            <SuiBox pr={1}>
-              <SuiInput
-                placeholder="Type here..."
-                withIcon={{ icon: "search", direction: "left" }}
-                customClass={classes.navbar_input}
-              />
-            </SuiBox>
             <SuiBox
               color={light ? "white" : "inherit"}
               customClass={classes.navbar_section_desktop}
             >
-              <Link to="/authentication/sign-in/basic">
+              {(userLoggedIn) ? (
+                <>
                 <IconButton className={classes.navbar_icon_button} size="small">
                   <Icon className={light ? "text-white" : "text-dark"}>account_circle</Icon>
+                  <SuiTypography
+                    variant="button"
+                    fontWeight="medium"
+                    textColor={light ? "white" : "dark"}
+                  >
+                    {sId}
+                  </SuiTypography>
+                </IconButton>
+                <IconButton className={classes.navbar_icon_button} size="small">
+                <Icon className={light ? "text-white" : "text-dark"}>exit_to_app</Icon>
+                <SuiTypography
+                  variant="button"
+                  fontWeight="medium"
+                  textColor={light ? "white" : "dark"}
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </SuiTypography>
+              </IconButton>
+              </>
+              ):(
+                <Link to="/authentication/sign-in/basic">
+
+                <IconButton className={classes.navbar_icon_button} size="small">
+                  <Icon className={light ? "text-white" : "text-dark"}>lock_open</Icon>
                   <SuiTypography
                     variant="button"
                     fontWeight="medium"
@@ -170,7 +195,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     Sign in
                   </SuiTypography>
                 </IconButton>
-              </Link>
+                </Link>
+              )}
               <IconButton
                 size="small"
                 color="inherit"

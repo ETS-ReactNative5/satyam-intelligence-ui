@@ -21,9 +21,12 @@ import api from "api/api";
 import CustomAlert from "mycomponents/Alert";
 import { fireAlert } from "utils/Alert";
 import { Select, MenuItem } from "@mui/material";
+import { getUserInformation } from "utils/Utils";
+import { useHistory } from "react-router-dom";
 
 function HmprDetails(props) {
 
+  const history = useHistory();
   const [id, setId] = useState(null);
   const [hmpr, setHmpr] = useState(null);
 
@@ -32,6 +35,8 @@ function HmprDetails(props) {
   const [failureMessage, setFailureMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
+  const [userInformation, setUserInformation] = useState(null);
+
   useEffect(async()=>{
     const state = props.location.state;
     if(state){
@@ -39,6 +44,11 @@ function HmprDetails(props) {
       setId(id);
       await handleFetchHmpr(id);
     }
+    const userInformation = getUserInformation();
+    if(!userInformation){
+      history.push("/authentication/sign-in/basic");
+    }
+    setUserInformation(userInformation);
   },[]);
 
   const handleFetchHmpr = async (id) => {
@@ -72,7 +82,6 @@ function HmprDetails(props) {
 
   const handleSearch = (event) => {
     const searchId = event.target.value;
-    console.log(searchId);
     setId(searchId);
     if (searchId.length >= 1) {
       setIsDisabled(false);
@@ -84,20 +93,30 @@ function HmprDetails(props) {
   const handleUdate = () => {
     const id = hmpr.id;
     removeFieldFromRequest(hmpr);
-    hmpr["updatedBy"] = "FRONT_END";
+    hmpr["updatedBy"] = userInformation.sId; 
     updateHmpr(id, hmpr);
   };
 
   const updateHmpr = async (id, newHmpr) => {
     try {
-      const { status } = await api.put("/api/hmpr/" + id, newHmpr);
+      const headers = {
+        headers: {Authorization:`Bearer ${userInformation.jwt}`},
+      };
+      const { status } = await api.put("/api/hmpr/" + id, newHmpr,headers);
       if (status === 200) {
         fireAlert(`Hmpr Successfully Updated`, ``, "success", "Okay!");
-        handleFetchHmpr();
+        handleFetchHmpr(id);
       }
     } catch (exception) {
-      fireAlert(`Failed Creating HMPR`, `Contact Widjesh Shiva Bhaggan.`, "error", "Okay!");
-      console.log("Exception while updating HMPR", exception);
+      console.log(exception.response)
+      if(exception.response && exception.response.status === 401){
+        fireAlert(`Failed Updating HMPR`, `Please request L2/L1 to update this record`, "error", "Okay!");  
+      }else{
+        fireAlert(`Failed Creating HMPR`, `Contact Widjesh Shiva Bhaggan.`, "error", "Okay!");
+        console.log("Exception while updating HMPR", exception);
+      }
+    }finally{
+      handleFetchHmpr(id);
     }
   };
 

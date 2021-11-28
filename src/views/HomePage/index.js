@@ -13,6 +13,8 @@ import Footer from "examples/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import SalesTable from "examples/Tables/SalesTable";
 import { useState, useEffect } from "react";
+import Separator from "mycomponents/authentication/components/Separator";
+
 
 // import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 // import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
@@ -29,6 +31,7 @@ import SU from "assets/images/icons/flags/SU.png";
 import CUR from "assets/images/icons/flags/CUR.png";
 import NED from "assets/images/icons/flags/NED.png";
 import api from "api/api";
+import SuiDatePicker from "components/SuiDatePicker";
 
 // import reportsBarChartData from "layouts/dashboards/default/data/reportsBarChartData";
 // import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
@@ -38,6 +41,12 @@ function HomePage() {
   const [euroStatistic, setEuroStatistic] = useState(null);
   const [usdStatistic, setUsdStatistic] = useState(null);
   const [branchSales, setBranchSales] = useState(null);
+
+  const [requestFilter, setRequestFilter] = useState({
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: new Date().setDate(new Date().getDate()+1),
+  });
+
   // const { size } = typography;
   // const { chart, items } = reportsBarChartData;
 
@@ -46,11 +55,7 @@ function HomePage() {
   }, []);
 
   const getAnalytics = async () => {
-    const body = {
-      startDate: "2021-11-26",
-      endDate: "2021-11-29",
-    };
-    const { data, status } = await api.post("/api/analytics", body);
+    const { data, status } = await api.post("/api/analytics", requestFilter);
     if (status === 200) {
       setEuroStatistic(data.euro);
       setUsdStatistic(data.usd);
@@ -60,63 +65,77 @@ function HomePage() {
 
   const formatBranchSales = (branches) => {
     const formattedBranchBySale = [];
-    
+
     //Sorting by highest sale on euro and usd
     var sortedHighestSale = branches.slice(0);
-    sortedHighestSale.sort((a, b) => ((a.euroSale + a.usdSale) < (b.euroSale + b.usdSale)) ? 1 : -1);
-    sortedHighestSale.forEach((branchSale)=>{
+    sortedHighestSale.sort((a, b) => (a.euroSale + a.usdSale < b.euroSale + b.usdSale ? 1 : -1));
+    sortedHighestSale.forEach((branchSale) => {
       formattedBranchBySale.push({
-        Land:getCountry(branchSale),
+        Land: getCountry(branchSale),
         Locatie: `${branchSale.branch}`,
         "Verkoop EURO": `€ ${branchSale.euroSale}`,
         "Verkoop USD": `$ ${branchSale.usdSale}`,
-      })
-    })
+      });
+    });
     return formattedBranchBySale;
   };
-  
-  const getCountry = (branchSale)=>{
-    if(branchSale.branch.includes("Den Haag")){
-      return [NED,'Nederland']
-    }
-    else if(branchSale.branch.includes('Curacao')){
-      return [CUR,"Curacao"]
-    }else{
-      return [SU,'Suriname']
-    }
-  }
 
+  const getCountry = (branchSale) => {
+    if (branchSale.branch.includes("Den Haag")) {
+      return [NED, "Nederland"];
+    } else if (branchSale.branch.includes("Curacao")) {
+      return [CUR, "Curacao"];
+    } else {
+      return [SU, "Suriname"];
+    }
+  };
 
-  const getEuroPercentage = ()=>{
-    if(euroStatistic){
+  const getEuroPercentage = () => {
+    if (euroStatistic) {
       return calculatePercentage(euroStatistic);
     }
-  }
+  };
 
-  const getUsdPercentage = ()=>{
-    if(usdStatistic){
+  const getUsdPercentage = () => {
+    if (usdStatistic) {
       return calculatePercentage(usdStatistic);
     }
-  }
+  };
 
-  const calculatePercentage = (statistic)=> {
-    let calculatedPercentage = ((((statistic.totalProfit/statistic.totalCommission) * 100)) - 100).toFixed(2);
-    let color = 'success';
-    let sign = '+';
+  const calculatePercentage = (statistic) => {
+    let calculatedPercentage = (
+      (statistic.totalProfit / statistic.totalCommission) * 100 -
+      100
+    ).toFixed(2);
+    let color = "success";
+    let sign = "+";
 
-    if((((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.00)
-    || isNaN(calculatedPercentage)){
+    if (
+      ((statistic.totalCommission / statistic.totalProfit) * 100).toFixed(2) == 100.0 ||
+      isNaN(calculatedPercentage)
+    ) {
       calculatedPercentage = 0;
-      sign="";
+      sign = "";
     }
     if (calculatedPercentage < 0) {
-      color = 'error';
+      color = "error";
       sign = "-";
     }
     return { color, text: `${sign}` + calculatedPercentage + "%" };
+  };
+
+  const handleSelectedDate = (date)=>{
+    const startDate = new Date(date).toISOString().split('T')[0];
+    const endDate = getEndDate(date)
+    console.log(startDate,endDate)
+    setRequestFilter({startDate,endDate});
+    getAnalytics();
   }
 
-
+  const getEndDate = (date)=>{
+    const endDate = new Date(date);
+    return endDate.setDate(endDate.getDate()+1);
+  }
 
   return (
     <DashboardLayout>
@@ -133,6 +152,24 @@ function HomePage() {
                 satyam intelligence statistics
               </SuiTypography>
             </SuiBox>
+
+            <Grid item xs={4}>
+              <SuiBox
+                ml={2}
+                display="flex"
+                flexDirection="column"
+                justifyContent="flex-end"
+                height="100%"
+              >
+                <SuiBox mb={1} ml={0.5} mt={3} lineHeight={0} display="inline-block">
+                  <SuiTypography component="label" variant="caption" fontWeight="bold">
+                    Selected Date (yyyy-mm-dd)
+                  </SuiTypography>
+                </SuiBox>
+                <SuiDatePicker value={requestFilter.startDate} onChange={handleSelectedDate}/>
+              </SuiBox>
+            </Grid>
+            <Separator message={''}/>
 
             <Grid container>
               <Grid item xs={12}>
@@ -188,7 +225,7 @@ function HomePage() {
           <Grid item xs={12} md={10} lg={7}>
             <Grid item xs={12} lg={10}>
               <SuiBox mb={3} position="relative">
-                <SalesTable title="Verkoop per Filiaal" rows={branchSales && branchSales || []} />
+                <SalesTable title="Verkoop per Filiaal" rows={(branchSales && branchSales) || []} />
               </SuiBox>
             </Grid>
           </Grid>
@@ -233,5 +270,3 @@ function HomePage() {
 }
 
 export default HomePage;
-
-

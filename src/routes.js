@@ -72,7 +72,6 @@ import ProductsList from "layouts/ecommerce/products/products-list";
 import OrderList from "layouts/ecommerce/orders/order-list";
 import OrderDetails from "layouts/ecommerce/orders/order-details";
 import Referral from "layouts/ecommerce/referral";
-import SignInBasic from "mycomponents/authentication/sign-in/basic";
 import SignInCover from "layouts/authentication/sign-in/cover";
 import SignInIllustration from "layouts/authentication/sign-in/illustration";
 import SignUpBasic from "layouts/authentication/sign-up/basic";
@@ -104,6 +103,8 @@ import HomePage from "views/HomePage";
 import HmprOverview from "views/Hmpr/HmprOverview";
 import NewHmpr from "views/Hmpr/NewHmpr";
 import HmprDetails from "views/Hmpr/HmprDetails";
+import SignInBasic from "views/SignIn";
+
 
 
 const routes = [

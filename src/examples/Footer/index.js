@@ -64,6 +64,9 @@ function Footer({ company, links }) {
         fontSize={size.sm}
         px={1.5}
       >
+        <SuiTypography variant="button" fontWeight="medium">
+            &nbsp;{'CONFIDENTIAL & RESTRICTED'}&nbsp;
+          </SuiTypography>
         &copy; {new Date().getFullYear()}, made with
         <SuiBox fontSize={size.regular} color="text" mb={-0.5} mx={0.25}>
           <Icon className="" color="inherit" fontSize="inherit">
@@ -71,12 +74,13 @@ function Footer({ company, links }) {
           </Icon>
         </SuiBox>
         by
-        <Link href={href} target="_blank">
+        <Link target="_blank">
           <SuiTypography variant="button" fontWeight="medium">
-            &nbsp;{name}&nbsp;
+            &nbsp;{'Satyam Holidays'}&nbsp;
           </SuiTypography>
         </Link>
-        for a better web.
+        for analytical purpose. 
+        
       </SuiBox>
       <SuiBox component="ul" customClass={classes.footer_list}>
         {renderLinks()}
@@ -89,10 +93,10 @@ function Footer({ company, links }) {
 Footer.defaultProps = {
   company: { href: "https://www.creative-tim.com/", name: "Creative Tim" },
   links: [
-    { href: "https://www.creative-tim.com/", name: "Creative Tim" },
-    { href: "https://www.creative-tim.com/presentation", name: "About Us" },
-    { href: "https://www.creative-tim.com/blog", name: "Blog" },
-    { href: "https://www.creative-tim.com/license", name: "License" },
+    // { href: "https://www.creative-tim.com/", name: "Creative Tim" },
+    // { href: "https://www.creative-tim.com/presentation", name: "About Us" },
+    // { href: "https://www.creative-tim.com/blog", name: "Blog" },
+    // { href: "https://www.creative-tim.com/license", name: "License" },
   ],
 };
 
