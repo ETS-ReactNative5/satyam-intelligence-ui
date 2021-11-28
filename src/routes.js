@@ -170,19 +170,19 @@ const routes = [
           //   component: Reports,
           // },
           {
-            name: "Nieuw",
+            name: "New",
             key: "newHmpr",
             route: "/hmpr/new",
             component: NewHmpr,
           },
           {
-            name: "Rapport Overzicht",
+            name: "Overview",
             key: "new-hmpr",
             route: "/hmpr/overzicht",
             component: HmprOverview
           },
           {
-            name: "Hmpr Details",
+            name: "Details",
             key: "hmprDetails",
             route: "/hmpr/details",
             component: HmprDetails,

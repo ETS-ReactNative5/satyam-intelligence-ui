@@ -100,7 +100,7 @@ function HomePage() {
   }
 
   const calculatePercentage = (statistic)=> {
-    let calculatedPercentage = ((statistic.totalProfit/statistic.totalCommission) * 100).toFixed(2);
+    let calculatedPercentage = ((((statistic.totalProfit/statistic.totalCommission) * 100)) - 100).toFixed(2);
     let color = 'success';
     let sign = '+';
 

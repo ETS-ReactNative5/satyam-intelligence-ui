@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -42,7 +42,7 @@ import { fireAlert } from "utils/Alert";
 import { Select, MenuItem } from "@mui/material";
 import SuiAvatar from "components/SuiAvatar";
 
-function HmprDetails() {
+function HmprDetails(props) {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [editorValue, setEditorValue] = useState(
@@ -57,21 +57,27 @@ function HmprDetails() {
   const [failureMessage, setFailureMessage] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const handleSetStartDate = (newDate) => setStartDate(newDate);
-  const handleSetEndDate = (newDate) => setEndDate(newDate);
-
-  const handleFetchHmpr = async () => {
-    try {
-      const { data, status } = await api.get(`/api/hmpr/${id}`);
-      if (status === 200) {
-        displaySuccessMessage();
-        setHmpr(data[0]);
-      }
-    } catch (exception) {
-      displayFailureMessage(`Hmpr with id:${id} does not exist`);
-      setHmpr(null);
-      console.log("Failed to get hmpr by id", exception);
+  useEffect(async()=>{
+    const state = props.location.state;
+    if(state){
+      const id = state.id;
+      setId(id);
+      await handleFetchHmpr(id);
     }
+  },[]);
+
+  const handleFetchHmpr = async (id) => {
+      try {
+        const { data, status } = await api.get(`/api/hmpr/${id}`);
+        if (status === 200) {
+          displaySuccessMessage();
+          setHmpr(data[0]);
+        }
+      } catch (exception) {
+        displayFailureMessage(`Hmpr with id:${id} does not exist`);
+        setHmpr(null);
+        console.log("Failed to get hmpr by id", exception);
+      }
   };
 
   const displayFailureMessage = (error) => {
@@ -159,7 +165,7 @@ function HmprDetails() {
                             HMPR ID #
                           </SuiTypography>
                         </SuiBox>
-                        <SuiInput onChange={handleSearch} placeholder="HMPR ID #" />
+                        <SuiInput onChange={handleSearch} placeholder="HMPR ID #" value={id} />
                       </SuiBox>
                     </Grid>
                   </Grid>
@@ -169,7 +175,7 @@ function HmprDetails() {
                         <SuiButton
                           variant="gradient"
                           buttonColor="dark"
-                          onClick={handleFetchHmpr}
+                          onClick={()=>{handleFetchHmpr(id)}}
                           disabled={isDisabled}
                         >
                           Retrieve

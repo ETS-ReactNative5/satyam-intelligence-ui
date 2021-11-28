@@ -180,7 +180,7 @@ function NewProject() {
                           End Date
                         </SuiTypography>
                       </SuiBox>
-                      <SuiDatePicker value={endDate} onChange={handleSetEndDate} />
+                      <SuiDatePicker value={endDate} onChange={handleSetEndDate} /> 
                     </SuiBox>
                   </Grid>
                 </Grid>

@@ -5,7 +5,8 @@ import React, { useState, useEffect } from "react";
 // Soft UI Dashboard PRO React example components
 
 // Data
-import { Card, Icon } from "@mui/material";
+import { Card, Icon, Grid } from "@mui/material";
+import { Link } from 'react-router-dom'
 import api from "api/api";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
@@ -16,14 +17,17 @@ import Footer from "examples/Footer";
 import LoadingBar from "mycomponents/LoadingBar";
 import StatusCell from "layouts/ecommerce/orders/order-list/components/StatusCell";
 import SuiButton from "components/SuiButton";
+import SuiDatePicker from "components/SuiDatePicker";
 
 const HmprOverview = () => {
   const [requestFilter, setRequestFilter] = useState({
-    startDate: "2021-11-26",
-    endDate: "2021-11-28",
+    startDate: new Date().toISOString().split('T')[0],
+    endDate: new Date().setDate(new Date().getDate()+1),
   });
   const [formattedHmpr, setFormattedHmpr] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [selectedDate,setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     fetchHmprDataAndFormat();
@@ -34,6 +38,7 @@ const HmprOverview = () => {
 
   const fetchHmprDataAndFormat = async () => {
     try {
+      setLoading(true);
       const { data, status } = await api.post("/api/hmpr/filter", requestFilter);
       if (status === 200) {
         formatHmprDataForTable(data);
@@ -47,7 +52,8 @@ const HmprOverview = () => {
   const formatHmprDataForTable = (hmprRawDdata) => {
     const formatted = {
       columns: [
-        { Header: "id", accessor: "id", width: "20%" },
+        {id:"id", Header: "id", accessor: (data) =>
+         (<Link to={{pathname:`/hmpr/details/`,state:{id:data.id}}}>{data.id}</Link>), width: "20%" },
         { Header: "Aangemaakt Door", accessor: "createdBy", width: "25%" },
         { Header: "Geupdate Door", accessor: "updatedBy" },
         { Header: "Voornaam", accessor: "firstName", width: "7%" },
@@ -89,6 +95,23 @@ const HmprOverview = () => {
     setFormattedHmpr(formatted);
   };
 
+  const handleSelectedDate = (date)=>{
+    const startDate = new Date(date).toISOString().split('T')[0];
+    const endDate = getEndDate(date);
+    setRequestFilter({startDate,endDate});
+    setButtonDisabled(false);
+  }
+
+  const getEndDate = (date)=>{
+    const endDate = new Date(date);
+    return endDate.setDate(endDate.getDate()+1);
+  }
+
+  const handleFilterRetrieve = ()=>{
+    fetchHmprDataAndFormat();
+    setButtonDisabled(true);
+  }
+
   return (
     <>
       <DashboardLayout>
@@ -103,6 +126,21 @@ const HmprOverview = () => {
               <SuiTypography variant="button" fontWeight="regular" textColor="text">
                 Select Date Range
               </SuiTypography>
+            </SuiBox>
+            <Grid item xs={4}>
+              <SuiBox ml={2} display="flex" flexDirection="column" justifyContent="flex-end" height="100%">
+                <SuiBox mb={1} ml={0.5} mt={3} lineHeight={0} display="inline-block">
+                  <SuiTypography component="label" variant="caption" fontWeight="bold">
+                    Selected Date (yyyy-mm-dd)
+                  </SuiTypography>
+                </SuiBox>
+                <SuiDatePicker value={selectedDate} onChange={handleSelectedDate} />
+              </SuiBox>
+            </Grid>
+            <SuiBox p={2} lineHeight={1}>
+              <SuiButton variant="gradient" buttonColor="dark" disabled={buttonDisabled} onClick={handleFilterRetrieve}>
+                Retrieve
+              </SuiButton>
             </SuiBox>
             {formattedHmpr && <DataTable table={formattedHmpr} canSearch />}
           </Card>
