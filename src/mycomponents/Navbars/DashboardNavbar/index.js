@@ -42,7 +42,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const history = useHistory();
 
   const [navbarType, setNavbarType] = useState();
-  const [sId,setSid] = useState(null);
+  const [userInformation,setUserInformation] = useState(null);
   const [userLoggedIn,setUserLoggedIn] = useState(false);
 
   const [controller, dispatch] = useSoftUIController();
@@ -55,7 +55,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     // Setting the navbar type
     const userInformation = getUserInformation();
     if(userInformation){
-      setSid(userInformation.sId);
+      setUserInformation(userInformation)
       setUserLoggedIn(true);
     }
     if (fixedNavbar) {
@@ -167,7 +167,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                     fontWeight="medium"
                     textColor={light ? "white" : "dark"}
                   >
-                    {sId}
+                    {userInformation.sId}({userInformation.role})
                   </SuiTypography>
                 </IconButton>
                 <IconButton className={classes.navbar_icon_button} size="small">

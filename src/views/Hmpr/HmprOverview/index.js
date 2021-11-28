@@ -21,7 +21,7 @@ import SuiDatePicker from "components/SuiDatePicker";
 
 const HmprOverview = () => {
   const [requestFilter, setRequestFilter] = useState({
-    startDate: new Date().toISOString().split('T')[0],
+    startDate: new Date(),
     endDate: new Date().setDate(new Date().getDate()+1),
   });
   const [formattedHmpr, setFormattedHmpr] = useState(null);
@@ -95,7 +95,7 @@ const HmprOverview = () => {
   };
 
   const handleSelectedDate = (date)=>{
-    const startDate = new Date(date).toISOString().split('T')[0];
+    const startDate = new Date(date);
     const endDate = getEndDate(date);
     setRequestFilter({startDate,endDate});
     setButtonDisabled(false);
@@ -107,6 +107,7 @@ const HmprOverview = () => {
   }
 
   const handleFilterRetrieve = ()=>{
+    console.log('calling with,',requestFilter)
     fetchHmprDataAndFormat();
     setButtonDisabled(true);
   }

@@ -84,10 +84,11 @@ function Basic() {
       setRememberMe(true)
       setSid(currentSid)  
     }
-  })
+  },[])
 
   const handleSid = (event)=>{
     const sid = event.target.value;
+    console.log(sid)
     setSid(sid);
   }
 

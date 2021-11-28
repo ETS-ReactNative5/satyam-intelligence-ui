@@ -15,7 +15,6 @@ import SalesTable from "examples/Tables/SalesTable";
 import { useState, useEffect } from "react";
 import Separator from "mycomponents/authentication/components/Separator";
 
-
 // import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 // import GradientLineChart from "examples/Charts/LineCharts/GradientLineChart";
 import Globe from "examples/Globe";
@@ -32,6 +31,7 @@ import CUR from "assets/images/icons/flags/CUR.png";
 import NED from "assets/images/icons/flags/NED.png";
 import api from "api/api";
 import SuiDatePicker from "components/SuiDatePicker";
+import LoadingBar from "mycomponents/LoadingBar";
 
 // import reportsBarChartData from "layouts/dashboards/default/data/reportsBarChartData";
 // import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
@@ -41,25 +41,37 @@ function HomePage() {
   const [euroStatistic, setEuroStatistic] = useState(null);
   const [usdStatistic, setUsdStatistic] = useState(null);
   const [branchSales, setBranchSales] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const [requestFilter, setRequestFilter] = useState({
-    startDate: new Date().toISOString().split('T')[0],
-    endDate: new Date().setDate(new Date().getDate()+1),
+    startDate: new Date().toISOString().split("T")[0],
+    endDate: new Date().setDate(new Date().getDate() + 1),
   });
 
   // const { size } = typography;
   // const { chart, items } = reportsBarChartData;
 
-  useEffect(() => {
-    getAnalytics();
-  }, []);
+  useEffect(async () => {
+    await getAnalytics(requestFilter);
+  }, [requestFilter]);
 
-  const getAnalytics = async () => {
-    const { data, status } = await api.post("/api/analytics", requestFilter);
-    if (status === 200) {
-      setEuroStatistic(data.euro);
-      setUsdStatistic(data.usd);
-      setBranchSales(formatBranchSales(data.branchSales));
+  const getAnalytics = async (requestFilter) => {
+    try {
+      setLoading(true);
+      const { data, status } = await api.post("/api/analytics", requestFilter);
+      if (status === 200) {
+        setEuroStatistic(data.euro);
+        setUsdStatistic(data.usd);
+        setBranchSales(formatBranchSales(data.branchSales));
+      }
+    } catch (exception) {
+      if(exception.response){
+         console.log(`Failed to get analytics, status:${exception.response.status}`);
+      }else{
+        console.log('Filed to get analytics')
+      }
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -124,18 +136,17 @@ function HomePage() {
     return { color, text: `${sign}` + calculatedPercentage + "%" };
   };
 
-  const handleSelectedDate = (date)=>{
-    const startDate = new Date(date).toISOString().split('T')[0];
-    const endDate = getEndDate(date)
-    console.log(startDate,endDate)
-    setRequestFilter({startDate,endDate});
-    getAnalytics();
-  }
+  const handleSelectedDate = async (date) => {
+    const startDate = new Date(date).toISOString().split("T")[0];
+    const endDate = getEndDate(date);
+    const requestFilter = { startDate, endDate };
+    setRequestFilter(requestFilter);
+  };
 
-  const getEndDate = (date)=>{
+  const getEndDate = (date) => {
     const endDate = new Date(date);
-    return endDate.setDate(endDate.getDate()+1);
-  }
+    return endDate.setDate(endDate.getDate() + 1);
+  };
 
   return (
     <DashboardLayout>
@@ -166,10 +177,10 @@ function HomePage() {
                     Selected Date (yyyy-mm-dd)
                   </SuiTypography>
                 </SuiBox>
-                <SuiDatePicker value={requestFilter.startDate} onChange={handleSelectedDate}/>
+                <SuiDatePicker value={requestFilter.startDate} onChange={handleSelectedDate} />
               </SuiBox>
             </Grid>
-            <Separator message={''}/>
+            <Separator message={""} />
 
             <Grid container>
               <Grid item xs={12}>
@@ -189,22 +200,23 @@ function HomePage() {
               <Grid item xs={12} sm={5}>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
+                    loading={loading}
                     title={{ text: "Totale Commissie EURO" }}
                     count={`€ ${euroStatistic && euroStatistic.totalCommission}`}
-                    // percentage={{ color: "success", text: "+55%" }}
                     icon={{ color: "info", component: "paid" }}
                   />
                 </SuiBox>
                 <MiniStatisticsCard
+                  loading={loading}
                   title={{ text: "Totale Commissie USD" }}
                   count={`$ ${usdStatistic && usdStatistic.totalCommission}`}
-                  // percentage={{ color: "success", text: "+3%" }}
                   icon={{ color: "info", component: "paid" }}
                 />
               </Grid>
               <Grid item xs={12} sm={5}>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
+                    loading={loading}
                     title={{ text: "Totale Winst EURO" }}
                     count={`€ ${euroStatistic && euroStatistic.totalProfit}`}
                     percentage={getEuroPercentage()}
@@ -213,6 +225,7 @@ function HomePage() {
                 </SuiBox>
                 <SuiBox mb={3}>
                   <MiniStatisticsCard
+                    loading={loading}
                     title={{ text: "Totale Winst USD" }}
                     count={`$ ${usdStatistic && usdStatistic.totalProfit}`}
                     percentage={getUsdPercentage()}

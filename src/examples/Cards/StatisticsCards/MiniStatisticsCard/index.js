@@ -1,19 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v2.0.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
 // @mui material components
@@ -24,10 +9,13 @@ import Icon from "@mui/material/Icon";
 // Soft UI Dashboard PRO React components
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
+import LoadingBar from "mycomponents/LoadingBar";
+import CustomSkeleton from "mycomponents/Skeleton";
 
-function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, direction }) {
+function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, direction,loading }) {
   return (
     <Card>
+      {loading && <LoadingBar/>}
       <SuiBox backgroundColor={backgroundColor} backgroundGradient>
         <SuiBox p={2}>
           <Grid container alignItems="center">
@@ -67,9 +55,9 @@ function MiniStatisticsCard({ backgroundColor, title, count, percentage, icon, d
                   fontWeight="bold"
                   textColor={backgroundColor === "white" ? "dark" : "white"}
                 >
-                  {count}{" "}
+                  {loading ? <CustomSkeleton/> : count}
                   <SuiTypography variant="button" textColor={percentage.color} fontWeight="bold">
-                    {percentage.text}
+                    {!loading && percentage.text }
                   </SuiTypography>
                 </SuiTypography>
               </SuiBox>
