@@ -58,6 +58,7 @@ function Basic() {
           </SuiBox>
         </SuiBox>
       </Card>
+      
     </BasicLayout>
   );
 }

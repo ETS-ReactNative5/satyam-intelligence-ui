@@ -38,6 +38,7 @@ import SuiPagination from "components/SuiPagination";
 // Soft UI Dashboard PRO React example components
 import DataTableHeadCell from "examples/Tables/DataTable/DataTableHeadCell";
 import DataTableBodyCell from "examples/Tables/DataTable/DataTableBodyCell";
+import SuiButton from "components/SuiButton";
 
 function DataTable({
   entriesPerPage,
@@ -159,7 +160,7 @@ function DataTable({
               </SuiTypography>
             </SuiBox>
           )}
-          {canSearch && (
+          {canSearch && ( 
             <SuiBox width="12rem" ml="auto">
               <SuiInput
                 placeholder="Search..."

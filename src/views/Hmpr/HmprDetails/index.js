@@ -40,6 +40,7 @@ import CustomAlert from "mycomponents/Alert";
 import CustomChip from "mycomponents/Chip";
 import { fireAlert } from "utils/Alert";
 import { Select, MenuItem } from "@mui/material";
+import SuiAvatar from "components/SuiAvatar";
 
 function HmprDetails() {
   const [startDate, setStartDate] = useState(new Date());

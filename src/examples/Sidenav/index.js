@@ -39,7 +39,7 @@ import SuiTypography from "components/SuiTypography";
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavList from "examples/Sidenav/SidenavList";
 import SidenavItem from "examples/Sidenav/SidenavItem";
-import SidenavCard from "examples/Sidenav/SidenavCard";
+// import SidenavCard from "examples/Sidenav/SidenavCard";
 
 // Custom styles for the Sidenav
 import styles from "examples/Sidenav/styles/sidenav";
@@ -244,7 +244,7 @@ function Sidenav({ routes, ...rest }) {
       <List>{renderRoutes}</List>
 
       <SuiBox customClass={classes.sidenav_footer}>
-        <SidenavCard />
+        {/* <SidenavCard /> */}
       </SuiBox>
     </Drawer>
   );
