@@ -8,7 +8,7 @@ import SuiTypography from "components/SuiTypography";
 
 // Soft UI Dashboard PRO React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "mycomponents/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import MiniStatisticsCard from "examples/Cards/StatisticsCards/MiniStatisticsCard";
 import SalesTable from "examples/Tables/SalesTable";

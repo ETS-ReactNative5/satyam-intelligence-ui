@@ -1,17 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v2.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect } from "react";
 
@@ -25,29 +11,18 @@ import Switch from "@mui/material/Switch";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import SuiInput from "components/SuiInput";
-import SuiSelect from "components/SuiSelect";
-import SuiDatePicker from "components/SuiDatePicker";
-import SuiEditor from "components/SuiEditor";
-import SuiDropzone from "components/SuiDropzone";
 import SuiButton from "components/SuiButton";
 
 // Soft UI Dashboard PRO React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "mycomponents/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import api from "api/api";
 import CustomAlert from "mycomponents/Alert";
-import CustomChip from "mycomponents/Chip";
 import { fireAlert } from "utils/Alert";
 import { Select, MenuItem } from "@mui/material";
-import SuiAvatar from "components/SuiAvatar";
 
 function HmprDetails(props) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [editorValue, setEditorValue] = useState(
-    "<p>Hello World!</p><p>Some initial <strong>bold</strong> text</p><br><br>"
-  );
 
   const [id, setId] = useState(null);
   const [hmpr, setHmpr] = useState(null);

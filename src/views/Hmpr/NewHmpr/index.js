@@ -17,7 +17,7 @@ import SuiButton from "components/SuiButton";
 
 // Soft UI Dashboard PRO React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "mycomponents/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // NewUser page components

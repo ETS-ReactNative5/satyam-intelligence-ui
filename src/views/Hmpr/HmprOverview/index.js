@@ -5,14 +5,14 @@ import React, { useState, useEffect } from "react";
 // Soft UI Dashboard PRO React example components
 
 // Data
-import { Card, Icon, Grid } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import { Link } from 'react-router-dom'
 import api from "api/api";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 import DataTable from "examples/Tables/DataTable";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import DashboardNavbar from "mycomponents/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import LoadingBar from "mycomponents/LoadingBar";
 import StatusCell from "layouts/ecommerce/orders/order-list/components/StatusCell";
@@ -27,7 +27,6 @@ const HmprOverview = () => {
   const [formattedHmpr, setFormattedHmpr] = useState(null);
   const [loading, setLoading] = useState(true);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-  const [selectedDate,setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     fetchHmprDataAndFormat();
@@ -134,7 +133,7 @@ const HmprOverview = () => {
                     Selected Date (yyyy-mm-dd)
                   </SuiTypography>
                 </SuiBox>
-                <SuiDatePicker value={selectedDate} onChange={handleSelectedDate} />
+                <SuiDatePicker value={requestFilter.startDate} onChange={handleSelectedDate} />
               </SuiBox>
             </Grid>
             <SuiBox p={2} lineHeight={1}>
