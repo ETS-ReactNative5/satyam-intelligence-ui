@@ -398,152 +398,152 @@ const routes = [
   //     },
   //   ],
   // },
-  // {
-  //   type: "collapse",
-  //   name: "Authentication",
-  //   key: "authentication",
-  //   icon: <Document size="12px" />,
-  //   collapse: [
-  //     {
-  //       name: "Sign In",
-  //       key: "sign-in",
-  //       collapse: [
-  //         {
-  //           name: "Basic",
-  //           key: "basic",
-  //           route: "/authentication/sign-in/basic",
-  //           component: SignInBasic,
-  //         },
-  //         {
-  //           name: "Cover",
-  //           key: "cover",
-  //           route: "/authentication/sign-in/cover",
-  //           component: SignInCover,
-  //         },
-  //         {
-  //           name: "Illustration",
-  //           key: "illustration",
-  //           route: "/authentication/sign-in/illustration",
-  //           component: SignInIllustration,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Sign Up",
-  //       key: "sign-up",
-  //       collapse: [
-  //         {
-  //           name: "Basic",
-  //           key: "basic",
-  //           route: "/authentication/sign-up/basic",
-  //           component: SignUpBasic,
-  //         },
-  //         {
-  //           name: "Cover",
-  //           key: "cover",
-  //           route: "/authentication/sign-up/cover",
-  //           component: SignUpCover,
-  //         },
-  //         {
-  //           name: "Illustration",
-  //           key: "illustration",
-  //           route: "/authentication/sign-up/illustration",
-  //           component: SignUpIllustration,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Reset Password",
-  //       key: "reset-password",
-  //       collapse: [
-  //         {
-  //           name: "Basic",
-  //           key: "basic",
-  //           route: "/authentication/reset-password/basic",
-  //           component: ResetBasic,
-  //         },
-  //         {
-  //           name: "Cover",
-  //           key: "cover",
-  //           route: "/authentication/reset-password/cover",
-  //           component: ResetCover,
-  //         },
-  //         {
-  //           name: "Illustration",
-  //           key: "illustration",
-  //           route: "/authentication/reset-password/illustration",
-  //           component: ResetIllustration,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Lock",
-  //       key: "lock",
-  //       collapse: [
-  //         {
-  //           name: "Basic",
-  //           key: "basic",
-  //           route: "/authentication/lock/basic",
-  //           component: LockBasic,
-  //         },
-  //         {
-  //           name: "Cover",
-  //           key: "cover",
-  //           route: "/authentication/lock/cover",
-  //           component: LockCover,
-  //         },
-  //         {
-  //           name: "Illustration",
-  //           key: "illustration",
-  //           route: "/authentication/lock/illustration",
-  //           component: LockIllustration,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "2-Step Verification",
-  //       key: "2-step-verification",
-  //       collapse: [
-  //         {
-  //           name: "Basic",
-  //           key: "basic",
-  //           route: "/authentication/verification/basic",
-  //           component: VerificationBasic,
-  //         },
-  //         {
-  //           name: "Cover",
-  //           key: "cover",
-  //           route: "/authentication/verification/cover",
-  //           component: VerificationCover,
-  //         },
-  //         {
-  //           name: "Illustration",
-  //           key: "illustration",
-  //           route: "/authentication/verification/illustration",
-  //           component: VerificationIllustration,
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       name: "Error",
-  //       key: "error",
-  //       collapse: [
-  //         {
-  //           name: "Error 404",
-  //           key: "error-404",
-  //           route: "/authentication/error/404",
-  //           component: Error404,
-  //         },
-  //         {
-  //           name: "Error 500",
-  //           key: "error-500",
-  //           route: "/authentication/error/500",
-  //           component: Error500,
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+  {
+    type: "collapse",
+    name: "Authentication",
+    key: "authentication",
+    icon: <Document size="12px" />,
+    collapse: [
+      {
+        name: "Sign In",
+        key: "sign-in",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/authentication/sign-in/basic",
+            component: SignInBasic,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/authentication/sign-in/cover",
+            component: SignInCover,
+          },
+          {
+            name: "Illustration",
+            key: "illustration",
+            route: "/authentication/sign-in/illustration",
+            component: SignInIllustration,
+          },
+        ],
+      },
+      {
+        name: "Sign Up",
+        key: "sign-up",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/authentication/sign-up/basic",
+            component: SignUpBasic,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/authentication/sign-up/cover",
+            component: SignUpCover,
+          },
+          {
+            name: "Illustration",
+            key: "illustration",
+            route: "/authentication/sign-up/illustration",
+            component: SignUpIllustration,
+          },
+        ],
+      },
+      {
+        name: "Reset Password",
+        key: "reset-password",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/authentication/reset-password/basic",
+            component: ResetBasic,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/authentication/reset-password/cover",
+            component: ResetCover,
+          },
+          {
+            name: "Illustration",
+            key: "illustration",
+            route: "/authentication/reset-password/illustration",
+            component: ResetIllustration,
+          },
+        ],
+      },
+      {
+        name: "Lock",
+        key: "lock",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/authentication/lock/basic",
+            component: LockBasic,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/authentication/lock/cover",
+            component: LockCover,
+          },
+          {
+            name: "Illustration",
+            key: "illustration",
+            route: "/authentication/lock/illustration",
+            component: LockIllustration,
+          },
+        ],
+      },
+      {
+        name: "2-Step Verification",
+        key: "2-step-verification",
+        collapse: [
+          {
+            name: "Basic",
+            key: "basic",
+            route: "/authentication/verification/basic",
+            component: VerificationBasic,
+          },
+          {
+            name: "Cover",
+            key: "cover",
+            route: "/authentication/verification/cover",
+            component: VerificationCover,
+          },
+          {
+            name: "Illustration",
+            key: "illustration",
+            route: "/authentication/verification/illustration",
+            component: VerificationIllustration,
+          },
+        ],
+      },
+      {
+        name: "Error",
+        key: "error",
+        collapse: [
+          {
+            name: "Error 404",
+            key: "error-404",
+            route: "/authentication/error/404",
+            component: Error404,
+          },
+          {
+            name: "Error 500",
+            key: "error-500",
+            route: "/authentication/error/500",
+            component: Error500,
+          },
+        ],
+      },
+    ],
+  },
   { type: "divider", key: "divider-1" },
   // { type: "title", title: "Docs", key: "title-docs" },
   // {
