@@ -1,22 +1,21 @@
-import { useState } from "views/Hmpr/NewHmpr/components/Systeem/node_modules/react";
+import { useState } from "react";
 
 // prop-type is a library for typechecking of props
-import PropTypes from "views/Hmpr/NewHmpr/components/Systeem/node_modules/prop-types";
+import PropTypes from "prop-types";
 
 // @mui material components
-import Grid from "views/Hmpr/NewHmpr/components/Systeem/node_modules/@mui/material/Grid";
-import Select from "views/Hmpr/NewHmpr/components/Systeem/node_modules/@mui/material/Select";
-import MenuItem from "views/Hmpr/NewHmpr/components/Systeem/node_modules/@mui/material/MenuItem";
+import Grid from "@mui/material/Grid";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 // Soft UI Dashboard PRO React components
-import SuiBox from "views/Hmpr/HmprOverview/node_modules/components/SuiBoxr/components/Systeem/node_modules/components/SuiBox";
-import SuiTypography from "views/Hmpr/HmprOverview/node_modules/components/SuiTypographynents/Systeem/node_modules/components/SuiTypography";
-import SuiInput from "views/Hmpr/NewHmpr/components/Systeem/node_modules/components/SuiInput";
+import SuiBox from "components/SuiBox";
+import SuiTypography from "components/SuiTypography";
+import SuiInput from "components/SuiInput";
 
 // NewUser page components
-import FormField from "views/Hmpr/NewHmpr/components/Systeem/node_modules/layouts/pages/users/new-user/components/FormField";
 
-function Address({ formData, requestBuilder,state }) {
+function SystemInformation({ formData, requestBuilder,state }) {
   const { formField, values, errors, touched } = formData;
   const { zip } = formField;
   const {gdsProvider:gdsProviderV, address1: address1V, address2: address2V, city: cityV, zip: zipV } = values;
@@ -126,8 +125,8 @@ function Address({ formData, requestBuilder,state }) {
 }
 
 // typechecking props for Address
-Address.propTypes = {
+SystemInformation.propTypes = {
   formData: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
 
-export default Address;
+export default SystemInformation;

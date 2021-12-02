@@ -1,52 +1,59 @@
-import { useState, useEffect } from "views/Hmpr/NewHmpr/components/Specificatie/node_modules/react";
-import PropTypes from "views/Hmpr/NewHmpr/components/Specificatie/node_modules/prop-types";
+import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 
 // @mui material components
-import Grid from "views/Hmpr/NewHmpr/components/Specificatie/node_modules/@mui/material/Grid";
+import Grid from "@mui/material/Grid";
 
 // Soft UI Dashboard PRO React components
-import SuiBox from "views/Hmpr/HmprOverview/node_modules/components/SuiBoxr/components/Specificatie/node_modules/components/SuiBox";
-import SuiTypography from "views/Hmpr/HmprOverview/node_modules/components/SuiTypographynents/Specificatie/node_modules/components/SuiTypography";
+import SuiBox from "components/SuiBox";
+
+import SuiTypography from "components/SuiTypography";
 
 // NewUser page components
-import FormField from "views/Hmpr/NewHmpr/components/Specificatie/node_modules/layouts/pages/users/new-user/components/FormField";
-import { Divider } from "views/Hmpr/NewHmpr/components/Specificatie/node_modules/@mui/material";
+import { Divider, Input } from "@mui/material";
+import FormField from "layouts/pages/users/new-user/components/FormField";
 
-function Profile({ formData, requestBuilder, state }) {
+function Specificatie({ formData, requestBuilder, state }) {
   const { formField, values } = formData;
-  const { publicEmail, fare, tax, commissionInPercentage } = formField;
+  const { fare, tax, commissionInPercentage } = formField; 
 
-  const [fareAmount, setFareAmount] = useState("");
+  const [fareAmount, setFareAmount] = useState(null);
   const [taxAmount, setTaxAmount] = useState("");
   const [commissionInPercentageAmount, setCommissionInPercentageAmount] = useState("");
   const [receviedAmount, setReceivedAmount] = useState("");
 
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(null);
   const [commissionInValue, setCommissionInValue] = useState("");
   const [amountToPay, setAmountToPay] = useState("");
   const [profit, setProfit] = useState("");
 
+
   useEffect(async()=>{
-    if(state.commissionInPercentage && state.fare){
-      const commissionInValue = ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * state.fare).toFixed(2);
+    if(state.totalAmount && state.tax){
+      const basicFare = (parseToFloat(state.totalAmount) - parseToFloat(state.tax)).toFixed(2);
+      setFareAmount(basicFare);
+      handleFare(basicFare);
+    }
+    if(state.commissionInPercentage && fareAmount){
+      const commissionInValue = ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * fareAmount).toFixed(2);
       setCommissionInValue(commissionInValue);
     }
-    if(state.fare && state.tax){
-      const totalAmount = (parseToFloat(state.fare) + parseToFloat(state.tax)).toFixed(2);
-      setTotalAmount(totalAmount);
-    }
-    if(state.fare && state.tax && state.commissionInPercentage){
-      const amountToPay = ((parseToFloat(state.fare) + parseToFloat(state.tax)) - ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * state.fare)).toFixed(2);
+    if(fareAmount && state.tax && state.commissionInPercentage){
+      const amountToPay = ((parseToFloat(fareAmount) + parseToFloat(state.tax)) - ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * fareAmount)).toFixed(2);
       setAmountToPay(amountToPay);    
     }
-    if(state.amountReceived && state.fare && state.tax && state.commissionInPercentage){
-      const profit = (state.amountReceived) - (parseToFloat(state.fare) + parseToFloat(state.tax) - ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * state.fare)).toFixed(2)
+    if(state.amountReceived && fareAmount && state.tax && state.commissionInPercentage){
+      const profit = (state.amountReceived) - (parseToFloat(fareAmount) + parseToFloat(state.tax) - ((parseToFloat(state.commissionInPercentage.split("%")[0]) / 100) * fareAmount)).toFixed(2)
       setProfit(profit);
     }
-  },[state.fare, state.tax, state.commissionInPercentage, state.amountReceived]);
+  },[fareAmount, state.tax, state.commissionInPercentage, state.amountReceived, state.totalAmount]);
 
-  const handleFare = (event) => {
-    requestBuilder({ ...state, fare: event.target.value });
+  const handleTotal = (event)=>{
+    requestBuilder({ ...state, totalAmount:event.target.value });
+  }
+
+  const handleFare = (fare) => {
+    requestBuilder({ ...state, fare });
   };
 
   const handleTax = (event) => {
@@ -65,6 +72,7 @@ function Profile({ formData, requestBuilder, state }) {
     return (value / 100) * 100;
   };
 
+
   return (
     <SuiBox>
       <SuiTypography variant="h5" fontWeight="bold">
@@ -73,14 +81,19 @@ function Profile({ formData, requestBuilder, state }) {
       <SuiBox mt={1.625}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={3}>
-            <FormField
-              type={fare.type}
-              label={fare.label}
-              name={fare.name}
-              value={state.fare}
-              placeholder={fare.placeholder}
-              onChange={handleFare}
+          <FormField
+              type={tax.type}
+              label={'Total Amount'}
+              name={'totalAmount'}
+              placeholder={'Total Amount'}
+              placeholder={`${state.currency ? state.currency : ''} Total Amount`} 
+              value={state.totalAmount} 
+              onChange={(event)=>{handleTotal(event)}}
             />
+          {/* <SuiTypography variant="button" fontWeight="bold" textColor="text">
+            Total Amount({state.currency})
+              </SuiTypography>
+              <Input placeholder={`${state.currency ? state.currency : ''} Total Amount`} value={totalAmount} inputProps={ariaLabel} onChange={(event)=>{handleTotal(event)}}/> */}
           </Grid>
           <Grid item xs={12} sm={3}>
             <FormField
@@ -115,9 +128,9 @@ function Profile({ formData, requestBuilder, state }) {
         </Grid>
         <Divider />
         <div>
-          {totalAmount !== 0 && (
+          {fareAmount && (
             <SuiTypography variant="button" fontWeight="bold" textColor="text">
-            Totaal: {state.currency} {" "} {totalAmount}
+            Basic Fare: {state.currency} {" "} {fareAmount}
           </SuiTypography>
           )}
         </div>
@@ -148,8 +161,8 @@ function Profile({ formData, requestBuilder, state }) {
   );
 }
 
-Profile.propTypes = {
+Specificatie.propTypes = {
   formData: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
 
-export default Profile;
+export default Specificatie;

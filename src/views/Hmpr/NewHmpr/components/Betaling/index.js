@@ -1,34 +1,17 @@
-/**
-=========================================================
-* Soft UI Dashboard PRO React - v2.0.0
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-pro-material-ui
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// prop-type is a library for typechecking of props
-import PropTypes from "views/Hmpr/NewHmpr/components/Betaling/node_modules/prop-types";
+import PropTypes from "prop-types";
 
 // @mui material components
-import Grid from "views/Hmpr/NewHmpr/components/Betaling/node_modules/@mui/material/Grid";
+import Grid from "@mui/material/Grid";
 
 // Soft UI Dashboard PRO React components
-import SuiBox from "views/Hmpr/HmprOverview/node_modules/components/SuiBoxr/components/Betaling/node_modules/components/SuiBox";
-import SuiTypography from "views/Hmpr/HmprOverview/node_modules/components/SuiTypographynents/Betaling/node_modules/components/SuiTypography";
+import SuiBox from "components/SuiBox";
+import SuiTypography from "components/SuiTypography";
 
-// NewUser page components
-import FormField from "views/Hmpr/NewHmpr/components/Betaling/node_modules/layouts/pages/users/new-user/components/FormField";
-import { Select, MenuItem, Switch } from "views/Hmpr/NewHmpr/components/Betaling/node_modules/@mui/material";
-import SuiInput from "views/Hmpr/NewHmpr/components/Betaling/node_modules/components/SuiInput";
+import { Select, MenuItem, Switch } from "@mui/material";
+import SuiInput from "components/SuiInput";
 
-function Socials({ formData, requestBuilder,state }) {
+function Betaling({ formData, requestBuilder,state }) {
   const { formField, values, errors, touched } = formData;
   const { twitter, facebook, instagram } = formField;
   const { twitter: twitterV, facebook: facebookV, instagram: instagramV } = values;
@@ -110,8 +93,8 @@ function Socials({ formData, requestBuilder,state }) {
 }
 
 // typechecking props for Socials
-Socials.propTypes = {
+Betaling.propTypes = {
   formData: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
 };
 
-export default Socials;
+export default Betaling;

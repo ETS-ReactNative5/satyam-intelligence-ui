@@ -1,15 +1,15 @@
-import PropTypes from "views/Hmpr/NewHmpr/components/Passagier/node_modules/prop-types";
+import PropTypes from "prop-types";
 
 // @mui material components
-import Grid from "views/Hmpr/NewHmpr/components/Passagier/node_modules/@mui/material/Grid";
+import Grid from "@mui/material/Grid";
 
 // Soft UI Dashboard PRO React components
-import SuiBox from "views/Hmpr/HmprOverview/node_modules/components/SuiBoxr/components/Passagier/node_modules/components/SuiBox";
-import SuiTypography from "views/Hmpr/HmprOverview/node_modules/components/SuiTypographynents/Passagier/node_modules/components/SuiTypography";
+import SuiBox from "components/SuiBox";
+import SuiTypography from "components/SuiTypography";
 
 // NewUser page components
-import { Input } from "views/Hmpr/NewHmpr/components/Passagier/node_modules/@mui/material";
-import {useState} from 'views/Hmpr/NewHmpr/components/Passagier/node_modules/react';
+import { Input } from "@mui/material";
+import {useState} from 'react';
 
 function UserInfo({requestBuilder,state }) {
 

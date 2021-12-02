@@ -20,10 +20,8 @@ import DashboardNavbar from "mycomponents/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // NewUser page components
-import UserInfo from "layouts/pages/users/new-user/components/Passagier";
-import Address from "layouts/pages/users/new-user/components/Systeem";
-import Socials from "layouts/pages/users/new-user/components/Betaling";
-import Profile from "layouts/pages/users/new-user/components/Specificatie";
+// import Address from "layouts/pages/users/new-user/components/Systeem";
+
 
 // NewUser layout schemas for form and form feilds
 import validations from "layouts/pages/users/new-user/schemas/validations";
@@ -35,6 +33,11 @@ import { getUserInformation } from "utils/Utils";
 import { fireAlert } from "utils/Alert";
 import { useHistory } from "react-router-dom";
 
+import UserInfo from "./components/Passagier";
+import SystemInformation from "./components/Systeem";
+import Betaling from "./components/Betaling";
+import Specificatie from "./components/Specificatie";
+
 function getSteps() {
   return ["Passagiers", "Systeem", "Betaling", "Specificatie"];
 }
@@ -44,11 +47,11 @@ function getStepContent(stepIndex, formData, setRequestBody, requestBody) {
     case 0:
       return <UserInfo formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 1:
-      return <Address formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
+      return <SystemInformation formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 2:
-      return <Socials formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
+      return <Betaling formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 3:
-      return <Profile formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
+      return <Specificatie formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     default:
       return null;
   }
@@ -74,6 +77,7 @@ function NewHmpr() {
         return;
       }
       requestBody["commissionInPercentage"] = requestBody["commissionInPercentage"].split("%")[0];
+      console.log(requestBody)
       const headers = {
         headers: {Authorization:`Bearer ${userInformation.jwt}`},
       };
