@@ -59,11 +59,11 @@ import SweetAlerts from "layouts/pages/sweet-alerts";
 import Notifications from "layouts/pages/notifications";
 import PricingPage from "layouts/pages/pricing-page";
 import RTL from "layouts/pages/rtl";
-import Kanban from "layouts/applications/kanban";
+
 import Wizard from "layouts/applications/wizard";
 import DataTables from "layouts/applications/data-tables";
 import Calendar from "layouts/applications/calendar";
-import Analytics from "layouts/applications/analytics";
+
 import Overview from "layouts/ecommerce/overview";
 import NewProduct from "layouts/ecommerce/products/new-product";
 import EditProduct from "layouts/ecommerce/products/edit-product";
@@ -104,6 +104,9 @@ import HmprOverview from "views/Hmpr/HmprOverview";
 import NewHmpr from "views/Hmpr/NewHmpr";
 import HmprDetails from "views/Hmpr/HmprDetails";
 import SignInBasic from "views/SignIn";
+import Analytics from "views/Analytics";
+import NewExpense from "views/Expense/NewExpense";
+import ExpenseOverview from "views/Expense/ExpenseOverview";
 
 
 
@@ -119,6 +122,12 @@ const routes = [
         key: "HomePage",
         route: "/dashboards/default",
         component: HomePage,
+      },
+      {
+        name: "Analytics",
+        key: "analytics",
+        route: "/applications/analytics",
+        component: Analytics,
       }
       // {
       //   name: "Automotive",
@@ -179,7 +188,7 @@ const routes = [
           {
             name: "Overview",
             key: "new-hmpr",
-            route: "/hmpr/overzicht",
+            route: "/hmpr/overview",
             component: HmprOverview
           },
           {
@@ -187,6 +196,24 @@ const routes = [
             key: "hmprDetails",
             route: "/hmpr/details",
             component: HmprDetails,
+          }
+        ],
+      },
+      {
+        name: "Expenses",
+        key: "expenses",
+        collapse: [
+          {
+            name: "New",
+            key: "expense",
+            route: "/expense/new",
+            component: NewExpense,
+          },
+          {
+            name: "Overview",
+            key: "expense-overview",
+            route: "/expense/overview",
+            component: ExpenseOverview,
           }
         ],
       },
@@ -321,12 +348,6 @@ const routes = [
   //       key: "calendar",
   //       route: "/applications/calendar",
   //       component: Calendar,
-  //     },
-  //     {
-  //       name: "Analytics",
-  //       key: "analytics",
-  //       route: "/applications/analytics",
-  //       component: Analytics,
   //     },
   //   ],
   // },
