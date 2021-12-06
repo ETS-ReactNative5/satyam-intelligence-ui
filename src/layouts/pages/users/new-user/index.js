@@ -84,7 +84,6 @@ function NewHmpr() {
       
 
       const {data,status} = await api.post('/api/hmpr',[requestBody]);
-      console.log(status);
     }catch(exception){
       console.log('Exception while creating HMPR', exception)
     }

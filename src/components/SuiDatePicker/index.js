@@ -17,7 +17,9 @@ Coded by www.creative-tim.com
 import PropTypes from "prop-types";
 
 // react-flatpickr components
-import Flatpickr from "react-flatpickr";
+import Flatpickr from "react-flatpickr/";
+
+
 
 // react-flatpickr styles
 import "flatpickr/dist/flatpickr.css";

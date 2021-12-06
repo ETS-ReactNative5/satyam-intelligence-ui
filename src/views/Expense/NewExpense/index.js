@@ -33,34 +33,29 @@ import { getUserInformation } from "utils/Utils";
 import { fireAlert } from "utils/Alert";
 import { useHistory } from "react-router-dom";
 
-import UserInfo from "./components/Passagier";
-import SystemInformation from "./components/Systeem";
-import Betaling from "./components/Betaling";
-import Specificatie from "./components/Specificatie";
+import ExpenseData from "./components/ExpenseData";
+import SpecificationInformation from "./components/SpecificationInformation";
+
 
 function getSteps() {
-  return ["Passagiers", "Systeem", "Betaling", "Specificatie"];
+  return ["Expense Information", "Specification"];
 }
 
 function getStepContent(stepIndex, formData, setRequestBody, requestBody) {
   switch (stepIndex) {
     case 0:
-      return <UserInfo formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
+      return <ExpenseData formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     case 1:
-      return <SystemInformation formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
-    case 2:
-      return <Betaling formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
-    case 3:
-      return <Specificatie formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
+      return <SpecificationInformation formData={formData} requestBuilder={setRequestBody} state={requestBody} />;
     default:
       return null;
   }
 }
 
-function NewHmpr() {
+function NewExpense() {
   const history = useHistory();
   const [activeStep, setActiveStep] = useState(0);
-  const [requestBody, setRequestBody] = useState({ isPaid: false });
+  const [requestBody, setRequestBody] = useState({});
 
   const steps = getSteps();
   const { formId, formField } = form;
@@ -71,22 +66,23 @@ function NewHmpr() {
 
   const submitForm = async (values, actions) => {
     try {
+      console.log(requestBody)
       const userInformation = getUserInformation();
       if (!userInformation) {
         history.push("/authentication/sign-in/basic");
         return;
       }
-      requestBody["commissionInPercentage"] = requestBody["commissionInPercentage"].split("%")[0];
+      console.log(requestBody)
       const headers = {
         headers: {Authorization:`Bearer ${userInformation.jwt}`},
       };
-      const { data, status } = await api.post("/api/hmpr", [requestBody], headers);
+      const { data, status } = await api.post("/api/expense", [requestBody], headers);
       if (status === 200) {
-        fireAlert(`Hmpr Successfully Created`, `Reference #${data[0].id}`, "success", "Okay!");
+        fireAlert(`Expense Successfully Created`, `Reference #${data[0].id}`, "success", "Okay!");
       }
     } catch (exception) {
-      fireAlert(`Failed Creating HMPR`, `Contact Widjesh Shiva Bhaggan.`, "error", "Okay!");
-      console.log("Exception while creating HMPR", exception);
+      fireAlert(`Failed Creating Expense`, `Contact Widjesh Shiva Bhaggan.`, "error", "Okay!");
+      console.log("Exception while creating Expense", exception);
     }
     setActiveStep(0);
   };
@@ -155,4 +151,4 @@ function NewHmpr() {
   );
 }
 
-export default NewHmpr;
+export default NewExpense;
