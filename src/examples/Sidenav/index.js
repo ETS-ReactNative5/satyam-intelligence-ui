@@ -45,7 +45,7 @@ import SidenavItem from "examples/Sidenav/SidenavItem";
 import styles from "examples/Sidenav/styles/sidenav";
 
 // Images
-import SoftUILogo from "assets/images/logo-ct.png";
+import SoftUILogo from "assets/images/satyam-logo.png";
 
 // Soft UI Dashboard PRO React context
 import { useSoftUIController } from "context";
@@ -234,8 +234,8 @@ function Sidenav({ routes, ...rest }) {
             customClass={classes.sidenav_logo}
           />
           <SuiBox customClass={classes.sidenav_logoLabel}>
-            <SuiTypography component="h6" variant="button" fontWeight="medium">
-              Soft UI Dashboard PRO
+            <SuiTypography component="h2" variant="button" fontWeight="medium">
+              Intelligence Platform
             </SuiTypography>
           </SuiBox>
         </NavLink>

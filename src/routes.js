@@ -107,6 +107,7 @@ import SignInBasic from "views/SignIn";
 import Analytics from "views/Analytics";
 import NewExpense from "views/Expense/NewExpense";
 import ExpenseOverview from "views/Expense/ExpenseOverview";
+import NewInvoice from "views/Invoicing/NewInvoice";
 
 
 
@@ -217,6 +218,24 @@ const routes = [
           }
         ],
       },
+      {
+        name: "Invoicing",
+        key: "invoices",
+        collapse: [
+          {
+            name: "New",
+            key: "expense",
+            route: "/invoice/new",
+            component: NewInvoice,
+          },
+          {
+            name: "All Invoices",
+            key: "expense-overview",
+            route: "/invoice/overview",
+            component: ExpenseOverview,
+          }
+        ],
+      }
       // {
       //   name: "Profile",
       //   key: "profile",
