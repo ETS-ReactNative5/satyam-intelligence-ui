@@ -31,7 +31,7 @@ import CUR from "assets/images/icons/flags/CUR.png";
 import NED from "assets/images/icons/flags/NED.png";
 import api from "api/api";
 import SuiDatePicker from "components/SuiDatePicker";
-import LoadingBar from "mycomponents/LoadingBar";
+
 
 // import reportsBarChartData from "layouts/dashboards/default/data/reportsBarChartData";
 // import gradientLineChartData from "layouts/dashboards/default/data/gradientLineChartData";
