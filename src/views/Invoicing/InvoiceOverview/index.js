@@ -32,7 +32,6 @@ const HmprOverview = () => {
 
   useEffect(() => {
     fetchHmprDataAndFormat();
-    // setInterval(fetchHmprDataAndFormat(),10000)
     return () => {
       "";
     };
@@ -47,7 +46,9 @@ const HmprOverview = () => {
       const headers = {
         headers: { Authorization: `Bearer ${userInformation.jwt}` },
       };
-      const { data, status } = await api.get("/api/payment/invoice", {}, headers);
+      console.log(headers)
+
+      const { data, status } = await api.get("/api/payment/invoice", headers);
       if (status === 200) {
         formatHmprDataForTable(data);
         setLoading(false);
