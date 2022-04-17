@@ -108,6 +108,7 @@ import Analytics from "views/Analytics";
 import NewExpense from "views/Expense/NewExpense";
 import ExpenseOverview from "views/Expense/ExpenseOverview";
 import NewInvoice from "views/Invoicing/NewInvoice";
+import InvoiceOverview from "views/Invoicing/InvoiceOverview";
 
 
 
@@ -230,9 +231,9 @@ const routes = [
           },
           {
             name: "All Invoices",
-            key: "expense-overview",
+            key: "invoice-overview",
             route: "/invoice/overview",
-            component: ExpenseOverview,
+            component: InvoiceOverview,
           }
         ],
       }

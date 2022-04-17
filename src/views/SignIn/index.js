@@ -64,7 +64,7 @@ function Basic() {
       const { data, status } = await api.post("/api/authentication/login", requestBody);
       if (status === 200) {
         const jwt = data.jwt;
-        localStorage.setItem("jwt", jwt);
+        localStorage.setItem("jwt", jwt); 
         history.push("/");
       }
     } catch (exception) {
@@ -88,7 +88,6 @@ function Basic() {
 
   const handleSid = (event)=>{
     const sid = event.target.value;
-    console.log(sid)
     setSid(sid);
   }
 

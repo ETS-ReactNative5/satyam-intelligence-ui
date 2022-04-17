@@ -41,8 +41,13 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 
 import HmprDetails from "views/Hmpr/HmprDetails";
+import { isTokenExpired } from "utils/Utils";
+import { useHistory } from 'react-router-dom';
+
 
 export default function App() {
+  const history = useHistory();
+
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, direction, layout, openConfigurator } = controller;
   const [onMouseEnter, setOnMouseEnter] = useState(false);
@@ -95,6 +100,9 @@ export default function App() {
   useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
+    if(isTokenExpired()){
+      history.push("/authentication/sign-in/basic")
+    }
   }, [pathname]);
 
   const getRoutes = (allRoutes) =>

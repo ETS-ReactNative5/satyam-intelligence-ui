@@ -70,7 +70,6 @@ function NewInvoice() {
   const submitForm = async (values, actions) => {
     try {
       setLoading(true);
-      const userInformation = getUserInformation();
       if (!userInformation) {
         history.push("/authentication/sign-in/basic");
         return;
