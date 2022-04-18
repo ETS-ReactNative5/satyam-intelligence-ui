@@ -40,6 +40,7 @@ import { useHistory } from "react-router-dom";
 import curved9 from "assets/images/curved-images/curved9.jpg";
 import { fireAlert } from "utils/Alert";
 
+import LoadingBar from "mycomponents/LoadingBar";
 import api from "api/api";
 
 function Basic() {
@@ -47,6 +48,7 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
   const [sid, setSid] = useState("");
   const [password, setPassword] = useState("");
+  const [loading,setLoading] = useState(false);
 
   const handleSetRememberMe = (event) =>{ 
     const checked = event.target.checked;
@@ -60,6 +62,7 @@ function Basic() {
 
   const handleSignIn = async () => {
     try {
+      setLoading(true);
       const requestBody = { username: sid, password };
       const { data, status } = await api.post("/api/authentication/login", requestBody);
       if (status === 200) {
@@ -75,6 +78,8 @@ function Basic() {
         fireAlert(`${'Server Error'}`
         ,`${exception.response.data.message}`, 'error','Okay!')
       }
+    }finally{
+      setLoading(true);
     }
   };
 
@@ -96,6 +101,7 @@ function Basic() {
   return (
     <BasicLayout title="Satyam Intelligence Platform" description="Welcome! " image={curved9}>
       <Card>
+      {loading && <LoadingBar />}
         <SuiBox p={3} mb={1} textAlign="center">
           <SuiTypography variant="h5" fontWeight="medium"></SuiTypography>
         </SuiBox>
